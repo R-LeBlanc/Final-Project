@@ -1,4 +1,4 @@
-# FInal Project
+# Final Project
 
 ## Goal
 
