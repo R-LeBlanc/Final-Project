@@ -2,11 +2,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import React from "react";
 
+import GlobalStyles from "./GlobalStyles";
+import Homepage from "./HomePage";
+
 const App = () => {
   return (
     <BrowserRouter>
+      <GlobalStyles />
       <Routes>
-        <Route exact path="/" element={"Homepage here"}></Route>
+        <Route exact path="/" element={<Homepage />}></Route>
         <Route path="/signin" element={"SignIn page here"}></Route>
         <Route
           path="/announcements"
