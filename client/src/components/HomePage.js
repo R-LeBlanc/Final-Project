@@ -1,13 +1,10 @@
 import styled from "styled-components";
 import React from "react";
 
-import Header from "./Header";
-
 const Homepage = () => {
   return (
     <>
       <Body>
-        <Header />
         <Description>
           <h2>Lorem Dolor Sed</h2>
           <p>
