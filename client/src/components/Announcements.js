@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
-import Header from "./Header";
-
 const Announcements = () => {
   const [announcements, setAnnouncements] = useState();
   const [loading, setLoading] = useState(true);
@@ -54,7 +52,6 @@ const Announcements = () => {
   // }
   return (
     <>
-      <Header />
       {!loading ? (
         <MainWrapper>
           <SideBar>

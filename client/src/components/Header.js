@@ -1,16 +1,36 @@
 import styled from "styled-components";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const Header = () => {
+  const [error, setError] = useState();
+  const { currentUser, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    setError("");
+    try {
+      await signOut();
+      navigate("/");
+    } catch {
+      setError("Failed to logout");
+    }
+  };
+
   return (
     <Wrapper>
       <Logo>
         <h1>Smart Reports</h1>
       </Logo>
+      {error && alert(error)}
       <Redirects>
         <Links to="/announcements">Announcements</Links>
-        <Links to="/signin">Sign In</Links>
+        {currentUser ? (
+          <Button onClick={handleSignOut}>Sign Out</Button>
+        ) : (
+          <Links to="/signin">Sign In</Links>
+        )}
       </Redirects>
     </Wrapper>
   );
@@ -39,4 +59,10 @@ const Redirects = styled.div`
 const Links = styled(Link)`
   color: white;
   text-decoration: none;
+`;
+
+const Button = styled.button`
+  &:hover {
+    cursor: pointer;
+  }
 `;
