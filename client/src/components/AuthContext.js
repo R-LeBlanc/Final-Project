@@ -27,6 +27,19 @@ export const AuthProvider = ({ children }) => {
     return auth.signOut();
   };
 
+  // Can combine all 3 updates into one and also update photo
+  const updateProfile = (update) => {
+    return currentUser.updateProfile(update);
+  };
+
+  const updateEmail = (email) => {
+    return currentUser.updateEmail(email);
+  };
+
+  const updatePassword = (password) => {
+    return currentUser.updatePasword(password);
+  };
+
   useEffect(() => {
     //   Uses a Firebase method to set the current user
     // Which we only want to mount once
@@ -44,6 +57,9 @@ export const AuthProvider = ({ children }) => {
     signup,
     signIn,
     signOut,
+    updateEmail,
+    updatePassword,
+    updateProfile,
   };
 
   return (
