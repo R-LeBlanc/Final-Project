@@ -10,6 +10,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import UpdateProfile from "./UpdateProfile";
 
 const App = () => {
   return (
@@ -27,6 +28,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/updateProfile"
+          element={
+            <PrivateRoute>
+              <UpdateProfile />
             </PrivateRoute>
           }
         ></Route>
