@@ -1,4 +1,15 @@
 "use strict";
+const {
+  getAnnouncements,
+  getClassNames,
+  getClassList,
+  getSubjects,
+} = require("./handlers");
+// const {
+//   announceImport,
+//   classImport,
+//   studentsImport,
+// } = require("./BatchImports");
 
 const express = require("express");
 
@@ -7,10 +18,10 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 // Endpoints ******************
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
-
+app.get("/announcements/:id", getAnnouncements);
+app.get("/announcements", getClassNames);
+app.get("/classList/:id", getClassList);
+app.get("/subjects", getSubjects);
 // this is our catch all endpoint.
 app.get("*", (req, res) => {
   res.status(404).json({
