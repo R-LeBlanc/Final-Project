@@ -14,7 +14,7 @@ const Dashboard = () => {
   const { signIn, currentUser } = useAuth();
   const { userDashboard, setUserDashboard, usersStudents, setUsersStudents } =
     useContext(DashboardContext);
-  const [dashboardLoading, setDashboardLoading] = useState();
+  const [dashboardLoading, setDashboardLoading] = useState(true);
 
   // async fetch functions***************
   // Gets the teacher's dashboard info from the data base
@@ -40,6 +40,7 @@ const Dashboard = () => {
 
     if (userDashboard) {
       getStudents();
+      setDashboardLoading(false);
     }
   }, []);
   // onAuthStateChanged(auth, (user) => {
@@ -53,13 +54,18 @@ const Dashboard = () => {
   return (
     <Wrapper>
       <SideMenu />
-      {currentUser.displayName ? (
-        <h1>{currentUser.displayName} Dashboard</h1>
-      ) : (
-        <h1>Teachers Dashboard</h1>
-      )}
-      {}
-      <StudentPreview />
+      <SecondaryWrap>
+        {currentUser.displayName ? (
+          <Title>{currentUser.displayName} Dashboard</Title>
+        ) : (
+          <Title>Teachers Dashboard</Title>
+        )}
+        {!dashboardLoading && (
+          <ComponentWrapper>
+            <StudentPreview />
+          </ComponentWrapper>
+        )}
+      </SecondaryWrap>
       {/* <Link to="/updateProfile">Update Profile</Link> */}
     </Wrapper>
   );
@@ -68,6 +74,17 @@ const Dashboard = () => {
 export default Dashboard;
 
 const Wrapper = styled.div`
+  display: flex;
+`;
+
+const SecondaryWrap = styled.div``;
+
+const Title = styled.div`
+  background-color: pink;
+  /* height: auto; */
+`;
+
+const ComponentWrapper = styled.div`
   display: flex;
 `;
 
