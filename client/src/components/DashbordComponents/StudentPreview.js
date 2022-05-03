@@ -6,11 +6,12 @@ import { DashboardContext } from "./DashboardContext";
 
 const StudentPreview = () => {
   const { usersStudents } = useContext(DashboardContext);
+  console.log(usersStudents);
   return (
     <Wrapper>
       <Title>Students</Title>
       {usersStudents.map((student) => {
-        // console.log(student.name);
+        // console.log("here");
         return (
           <StudentWrap key={student.id}>
             <Image>S</Image>
@@ -33,8 +34,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 30px 20px;
-  width: 35vw;
-  /* max-height: 50px; */
+  width: 40vw;
+  max-height: 350px;
+
   /* overflow: scroll; */
 `;
 
@@ -47,7 +49,7 @@ const StudentWrap = styled.div`
     var(--secondary-color),
     var(--primary-color)
   );
-  border-radius: 15px;
+  border-radius: 20px;
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;

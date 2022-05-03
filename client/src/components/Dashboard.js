@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
+import { Doughnut } from "react-chartjs-2";
 import { useAuth } from "./AuthContext";
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
 
 import SideMenu from "./DashbordComponents/SideMenu";
 import StudentPreview from "./DashbordComponents/StudentPreview";
+import ClassesPreview from "./DashbordComponents/ClassesPreview";
+import { data } from "./DashbordComponents/ChartView";
 
 const Dashboard = () => {
   // TODO: Update profile so I can use the profile information
@@ -40,8 +43,8 @@ const Dashboard = () => {
 
     if (userDashboard) {
       getStudents();
-      setDashboardLoading(false);
     }
+    setDashboardLoading(false);
   }, []);
   // onAuthStateChanged(auth, (user) => {
   //   if (user) {
@@ -54,19 +57,35 @@ const Dashboard = () => {
   return (
     <Wrapper>
       <SideMenu />
-      <SecondaryWrap>
-        {currentUser.displayName ? (
-          <Title>{currentUser.displayName} Dashboard</Title>
-        ) : (
-          <Title>Teachers Dashboard</Title>
-        )}
-        {!dashboardLoading && (
-          <ComponentWrapper>
-            <StudentPreview />
-          </ComponentWrapper>
-        )}
-      </SecondaryWrap>
-      {/* <Link to="/updateProfile">Update Profile</Link> */}
+      {dashboardLoading ? (
+        <h1>Loading</h1>
+      ) : (
+        <SecondaryWrap>
+          {currentUser.displayName ? (
+            <Title>{currentUser.displayName} Dashboard</Title>
+          ) : (
+            <Title>Teachers Dashboard</Title>
+          )}
+          {!dashboardLoading && (
+            // Preview components for dashboard
+            <ComponentWrapper>
+              <StudentPreview />
+              <ChartWrap>
+                <h2>Class Average's</h2>
+                <Doughnut
+                  data={data}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: true,
+                  }}
+                  style={{ height: "50px" }}
+                />
+              </ChartWrap>
+              <ClassesPreview />
+            </ComponentWrapper>
+          )}
+        </SecondaryWrap>
+      )}
     </Wrapper>
   );
 };
@@ -77,15 +96,25 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const SecondaryWrap = styled.div``;
+const SecondaryWrap = styled.div`
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* justify-content: space-between; */
+`;
 
 const Title = styled.div`
-  background-color: pink;
-  /* height: auto; */
+  font-size: 2rem;
 `;
 
 const ComponentWrapper = styled.div`
-  display: flex;
+  background-color: pink;
+`;
+
+const ChartWrap = styled.div`
+  background-color: lightblue;
+  max-width: 40vw;
 `;
 
 const ClassList = styled.div``;
