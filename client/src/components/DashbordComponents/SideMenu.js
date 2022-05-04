@@ -8,7 +8,7 @@ const SideMenu = () => {
   return (
     <Wrapper>
       {/* placeholder logo */}
-      <Logo src="/images/brain.png" />
+      <Logo />
       <Links to="/updateProfile">Update Profile</Links>
       <Links to="/myclasses">My Classes</Links>
       <Links to="/mystudentlist">My Students</Links>
@@ -25,9 +25,11 @@ const Wrapper = styled.div`
   height: 90vh;
 `;
 
-const Logo = styled.img`
-  border-radius: 100%;
-  height: 10%;
+const Logo = styled.div`
+  background-color: white;
+  border-radius: 100px;
+  height: 70px;
+  width: 70px;
   margin-top: 25px;
 `;
 

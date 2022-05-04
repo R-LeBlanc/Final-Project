@@ -9,17 +9,22 @@ const StudentPreview = () => {
   console.log(usersStudents);
   return (
     <Wrapper>
-      <Title>Students</Title>
-      {usersStudents.map((student) => {
-        // console.log("here");
-        return (
-          <StudentWrap key={student.id}>
-            <Image>S</Image>
-            <Name>{student.name}</Name>
-            <StudentId>ID {student.id}</StudentId>
-          </StudentWrap>
-        );
-      })}
+      <SecondaryWrap>
+        <Title>Students</Title>
+        <Container>
+          {usersStudents &&
+            usersStudents.map((student) => {
+              console.log("here");
+              return (
+                <StudentWrap key={student.id}>
+                  <Image>S</Image>
+                  <Name>{student.name}</Name>
+                  <StudentId>ID {student.id}</StudentId>
+                </StudentWrap>
+              );
+            })}
+        </Container>
+      </SecondaryWrap>
     </Wrapper>
   );
 };
@@ -32,13 +37,25 @@ const Wrapper = styled.div`
   border-radius: 15px;
   color: white;
   display: flex;
-  flex-direction: column;
-  padding: 30px 20px;
+  /* flex-direction: column; */
+  /* padding: 30px 20px; */
   width: 40vw;
-  max-height: 350px;
+  height: 70%;
 
   /* overflow: scroll; */
 `;
+
+const SecondaryWrap = styled.div`
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 20px;
+  height: 85%;
+  width: 100%;
+`;
+
+const Container = styled.div``;
 
 const Title = styled.h2``;
 
@@ -65,7 +82,7 @@ const Image = styled.div`
   text-align: center;
 `;
 
-const Name = styled.h3`
+const Name = styled.p`
   /* padding-right: 20px; */
 `;
 

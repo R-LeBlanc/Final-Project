@@ -10,6 +10,8 @@ export default createGlobalStyle`
     --primary-color: #303841;
     --secondary-color: #00ADB5;
     --accent-color: #FF5722;
+	--font-header: 'Bebas Neue', sans-serif;
+	--font-body: 'Montserrat', sans-serif;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -57,10 +59,28 @@ table {
 }
 h1 {
     font-size: 2rem;
+	font-family: var(--font-header);
 }
 
 h2 {
     font-size: 1.5rem;
+	font-family: var(--font-header);
+}
+
+h3,
+label {
+	font-family: var(--font-header);
+}
+
+p,
+a,
+li,
+blockquote,
+input,
+button,
+span
+ {
+  font-family: var(--font-body);
 }
 
 `;

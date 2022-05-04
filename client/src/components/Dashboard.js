@@ -39,11 +39,12 @@ const Dashboard = () => {
   // *************************************
 
   useEffect(() => {
+    // can try moving this to the sign in page?
     dashboardAndStudents();
 
-    if (userDashboard) {
-      getStudents();
-    }
+    // if (userDashboard) {
+    getStudents();
+    // }
     setDashboardLoading(false);
   }, []);
   // onAuthStateChanged(auth, (user) => {
@@ -70,18 +71,20 @@ const Dashboard = () => {
             // Preview components for dashboard
             <ComponentWrapper>
               <StudentPreview />
-              <ChartWrap>
-                <h2>Class Average's</h2>
-                <Doughnut
-                  data={data}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: true,
-                  }}
-                  style={{ height: "50px" }}
-                />
-              </ChartWrap>
-              <ClassesPreview />
+              <LeftSide>
+                <ChartWrap>
+                  <h2>Class Average's</h2>
+                  <Doughnut
+                    data={data}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: true,
+                    }}
+                    style={{ height: "50px" }}
+                  />
+                </ChartWrap>
+                <ClassesPreview />
+              </LeftSide>
             </ComponentWrapper>
           )}
         </SecondaryWrap>
@@ -97,7 +100,7 @@ const Wrapper = styled.div`
 `;
 
 const SecondaryWrap = styled.div`
-  background-color: lightblue;
+  /* background-color: lightblue; */
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -106,15 +109,28 @@ const SecondaryWrap = styled.div`
 
 const Title = styled.div`
   font-size: 2rem;
+  font-family: var(--font-header);
 `;
 
 const ComponentWrapper = styled.div`
-  background-color: pink;
+  /* background-color: pink; */
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+`;
+
+const LeftSide = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* align-items: center; */
+  height: 70%;
 `;
 
 const ChartWrap = styled.div`
-  background-color: lightblue;
-  max-width: 40vw;
+  /* background-color: lightblue; */
+  max-width: 300px;
 `;
 
 const ClassList = styled.div``;

@@ -53,11 +53,12 @@ const Logo = styled.div``;
 const Redirects = styled.div`
   display: flex;
   justify-content: space-evenly;
-  width: 200px;
+  width: 250px;
 `;
 
 const Links = styled(Link)`
   color: white;
+  /* padding-right: 10px; */
   text-decoration: none;
 `;
 

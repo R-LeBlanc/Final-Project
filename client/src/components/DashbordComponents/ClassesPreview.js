@@ -7,10 +7,10 @@ const ClassesPreview = () => {
   return (
     <Wrapper>
       <h2>Classes</h2>
-      <h3>Some samaple text here</h3>
-      <h3>Some samaple text here</h3>
-      <h3>Some samaple text here</h3>
-      <h3>Some samaple text here</h3>
+      <p>Some samaple text here</p>
+      <p>Some samaple text here</p>
+      <p>Some samaple text here</p>
+      <p>Some samaple text here</p>
     </Wrapper>
   );
 };
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 30px 20px;
 
-  width: 40vw;
+  width: 30vw;
   max-height: 350px;
   /* max-height: 50px; */
   /* overflow: scroll; */
