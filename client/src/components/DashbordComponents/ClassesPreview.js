@@ -5,7 +5,7 @@ import { DashboardContext } from "./DashboardContext";
 
 const ClassesPreview = () => {
   const { userDashboard } = useContext(DashboardContext);
-  console.log(userDashboard);
+  // console.log(userDashboard);
   return (
     <Wrapper>
       <h2>Classes:</h2>

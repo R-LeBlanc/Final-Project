@@ -35,7 +35,7 @@ const Dashboard = () => {
       studentArray.push(data.data[0]);
     });
     setUsersStudents(studentArray);
-    console.log(usersStudents);
+    // console.log(usersStudents);
   };
   // *************************************
 
@@ -44,10 +44,15 @@ const Dashboard = () => {
     dashboardAndStudents();
 
     // if (userDashboard) {
-    getStudents();
     // }
-    setDashboardLoading(false);
+    //   getStudents();
+    // setDashboardLoading(false);
   }, []);
+
+  useEffect(() => {
+    getStudents();
+    setDashboardLoading(false);
+  }, [userDashboard]);
   // onAuthStateChanged(auth, (user) => {
   //   if (user) {
   //     console.log(user.email, user.displayName);
