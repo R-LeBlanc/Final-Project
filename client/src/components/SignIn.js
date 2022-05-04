@@ -28,7 +28,7 @@ const SignIn = () => {
     <>
       <Wrapper>
         <h1>Sign In</h1>
-        {currentUser && currentUser.email}
+        {currentUser && <p>{currentUser.displayName}</p>}
         {error && <h1>{error}</h1>}
         {/* <form onSubmit={handleSubmit}> */}
         <label>Email</label>

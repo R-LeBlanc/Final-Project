@@ -83,7 +83,9 @@ const Wrapper = styled.div``;
 
 const Title = styled.h2``;
 
-const Message = styled.div``;
+const Message = styled.div`
+  font-family: var(--font-body);
+`;
 
 const MainWrapper = styled.div`
   display: flex;

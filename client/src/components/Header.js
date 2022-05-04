@@ -43,7 +43,7 @@ const Wrapper = styled.div`
   background-color: var(--primary-color);
   color: white;
   display: flex;
-  height: 50px;
+  height: 10vh;
   justify-content: space-between;
   padding: 0 20px;
 `;
@@ -53,11 +53,12 @@ const Logo = styled.div``;
 const Redirects = styled.div`
   display: flex;
   justify-content: space-evenly;
-  width: 200px;
+  width: 250px;
 `;
 
 const Links = styled(Link)`
   color: white;
+  /* padding-right: 10px; */
   text-decoration: none;
 `;
 

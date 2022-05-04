@@ -54,7 +54,12 @@ const UpdateProfile = () => {
         {error && <h1>{error}</h1>}
         {/* <form onSubmit={handleSubmit}> */}
         <label>Full Name</label>
-        <input type="text" ref={nameRef} required />
+        <input
+          type="text"
+          ref={nameRef}
+          required
+          defaultValue={currentUser.displayName}
+        />
         <label>Email</label>
         <input
           type="email"

@@ -1,0 +1,64 @@
+[
+
+    
+        {
+        "fullName": "Josie Arnold",
+        "SCI-GR5": {
+            "Earth and Space": 75,
+        "Quiz": 80,
+        "Life Systems": 83,
+        "Matter and Energy": 90,
+        "Structures and Mechanisms": 92
+        },
+        "ENG-GR5": {
+            "Oral Presentation": 79,
+            "Book Report": 76,
+            "Spelling Test": 72
+        },
+        "MA-GR5": {
+          "Spacial Sense": 89,
+            "Algebra": 81,
+            "Mathematical Processes": 90
+        }
+    },
+    {
+        "fullName": "Charlie Horton",
+        "SCI-GR5": {
+            "Earth and Space": 65,
+        "Quiz": 70,
+        "Life Systems": 74,
+        "Matter and Energy": 80,
+        "Structures and Mechanisms": 79
+        },
+        "ENG-GR5": {
+            "Oral Presentation": 90,
+            "Book Report": 93,
+            "Spelling Test": 89
+        },
+        "MA-GR5": {
+          "Spacial Sense": 76,
+            "Algebra": 69,
+            "Mathematical Processes": 71
+        }
+    },
+    {
+        "fullName": "Ayat Austin",
+        "SCI-GR5": {
+            "Earth and Space": 72,
+        "Quiz": 75,
+        "Life Systems": 79,
+        "Matter and Energy": 86,
+        "Structures and Mechanisms": 83
+        },
+        "ENG-GR5": {
+            "Oral Presentation": 71,
+            "Book Report": 90,
+            "Spelling Test": 89
+        },
+        "MA-GR5": {
+          "Spacial Sense": 85,
+            "Algebra": 73,
+            "Mathematical Processes": 86
+        }
+    }
+]

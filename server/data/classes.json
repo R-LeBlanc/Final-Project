@@ -1,0 +1,14 @@
+[
+    {
+        "class": "English",
+        "classID": "ENG-GR4"
+    },
+    {
+        "class": "Science",
+        "classID": "SCI-GR4"
+    },
+    {
+        "class": "Math",
+        "classID": "MA-GR4"
+    }
+]
