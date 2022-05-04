@@ -35,6 +35,7 @@ const Dashboard = () => {
       studentArray.push(data.data[0]);
     });
     setUsersStudents(studentArray);
+    console.log(usersStudents);
   };
   // *************************************
 

@@ -58,6 +58,8 @@ const getDashBoardInfo = async (req, res) => {
   }
 };
 
+// TODO: convert the rest to mongoose
+
 // const getClassList = async (req, res) => {
 // try{
 //   const classList = await User.where("teacher").equals()
@@ -98,7 +100,7 @@ const getStudents = async (req, res) => {
   const id = req.params.id;
   try {
     const user = await User.find({ id });
-    // console.log(user);
+    console.log(user);
     res.status(200).json({ status: 200, data: user });
   } catch (e) {
     console.log(e.message);

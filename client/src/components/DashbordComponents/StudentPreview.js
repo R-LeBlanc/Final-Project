@@ -12,17 +12,16 @@ const StudentPreview = () => {
       <SecondaryWrap>
         <Title>Students</Title>
         <Container>
-          {usersStudents &&
-            usersStudents.map((student) => {
-              console.log("here");
-              return (
-                <StudentWrap key={student.id}>
-                  <Image>S</Image>
-                  <Name>{student.name}</Name>
-                  <StudentId>ID {student.id}</StudentId>
-                </StudentWrap>
-              );
-            })}
+          {usersStudents.map((student) => {
+            console.log("here");
+            return (
+              <StudentWrap key={student.id}>
+                <Image>S</Image>
+                <Name>{student.name}</Name>
+                <StudentId>ID {student.id}</StudentId>
+              </StudentWrap>
+            );
+          })}
         </Container>
       </SecondaryWrap>
     </Wrapper>
