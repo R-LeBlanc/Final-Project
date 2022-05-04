@@ -4,13 +4,18 @@ import { Link } from "react-router-dom";
 import { DashboardContext } from "./DashboardContext";
 
 const ClassesPreview = () => {
+  const { userDashboard } = useContext(DashboardContext);
+
   return (
     <Wrapper>
-      <h2>Classes</h2>
-      <p>Some samaple text here</p>
-      <p>Some samaple text here</p>
-      <p>Some samaple text here</p>
-      <p>Some samaple text here</p>
+      <h2>Classes:</h2>
+      {!userDashboard ? (
+        <h1>Loading</h1>
+      ) : (
+        userDashboard.classes.map((c) => {
+          return <p>{c}</p>;
+        })
+      )}
     </Wrapper>
   );
 };
