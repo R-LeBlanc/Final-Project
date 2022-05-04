@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 0 40px;
   height: 90vh;
+  margin-right: 20px;
 `;
 
 const Logo = styled.div`
