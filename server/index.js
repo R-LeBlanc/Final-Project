@@ -23,7 +23,8 @@ app.get("/announcements/:id", getAnnouncements);
 app.get("/announcements", getClassNames);
 // Will get the users information
 app.get("/dashboard/:id", getDashBoardInfo);
-// app.get("/classList/:id", getClassList);
+
+app.get("/classlist/:teacherID", getClassList);
 // app.get("/subjects", getSubjects);
 app.get("/students/:id", getStudents);
 // this is our catch all endpoint.

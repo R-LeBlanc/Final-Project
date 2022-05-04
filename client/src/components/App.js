@@ -11,6 +11,7 @@ import SignUp from "./SignUp";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import UpdateProfile from "./UpdateProfile";
+import MyClasses from "./MyClasses";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/announcements" element={<Announcements />}></Route>
         <Route path="/students/:id" element={"Student profile page"}></Route>
+        <Route path="/myclasses" element={<MyClasses />}></Route>
         <Route
           path="/dashboard"
           element={
