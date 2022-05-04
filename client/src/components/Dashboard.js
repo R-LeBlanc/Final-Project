@@ -54,7 +54,7 @@ const Dashboard = () => {
   //     console.log("no user");
   //   }
   // });
-  console.log(userDashboard);
+  // console.log(userDashboard);
   return (
     <Wrapper>
       <SideMenu />
