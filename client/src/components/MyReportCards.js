@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
 import SideMenu from "./DashbordComponents/SideMenu";
 
-const MyClasses = () => {
-  const { userDashboard } = useContext(DashboardContext);
+const MyReportCards = () => {
+  const { userDashboard, usersStudents } = useContext(DashboardContext);
   const [classes, setClasses] = useState();
   // console.log(userDashboard);
 
@@ -24,30 +24,33 @@ const MyClasses = () => {
     <Wrapper>
       <SideMenu />
       <SecondaryWrap>
-        <Title>My Classes</Title>
+        <Title>My Report Cards</Title>
         <ClassesWrap>
           <ClassesWrap2>
-            {/* <Buttons>
-              <View>Class View</View>
-              <View>Student View</View>
-            </Buttons> */}
+            <Buttons>
+              <View for="classSelect">Select a class:</View>
+              <Select id="classSelect">
+                {classes &&
+                  classes.map((c) => {
+                    return <Option>{c.classID}</Option>;
+                  })}
+              </Select>
+            </Buttons>
             <Table>
               <Row>
-                <TableTitles>Sheet Name</TableTitles>
-                <TableTitles>Class Code</TableTitles>
+                <TableTitles>Name</TableTitles>
                 <TableTitles>Grade</TableTitles>
                 <TableTitles>Teacher(s)</TableTitles>
                 <TableTitles>Average</TableTitles>
                 <TableTitles>Median</TableTitles>
               </Row>
-              {!classes ? (
+              {!usersStudents ? (
                 <h1>Loading</h1>
               ) : (
-                classes.map((c) => {
+                usersStudents.map((student) => {
                   return (
                     <Row>
-                      <Classes>{c.name}</Classes>
-                      <Classes>{c.classID}</Classes>
+                      <Classes>{student.name}</Classes>
                       <Classes>5</Classes>
                       <Classes>{userDashboard.name}</Classes>
                       {/* TEMP DATA */}
@@ -65,7 +68,7 @@ const MyClasses = () => {
   );
 };
 
-export default MyClasses;
+export default MyReportCards;
 
 const Wrapper = styled.div`
   display: flex;
@@ -103,7 +106,7 @@ const ClassesWrap2 = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: space-evenly; */
   height: 60%;
   width: 80%;
 `;
@@ -116,8 +119,9 @@ const Buttons = styled.div`
   width: 90%;
 `;
 
-const View = styled.button`
+const View = styled.label`
   border: none;
+  font-size: 1.5rem;
   padding: 5px 10px;
   margin-left: 7px;
 
@@ -127,6 +131,12 @@ const View = styled.button`
     cursor: pointer;
   }
 `;
+
+const Select = styled.select`
+  border-radius: 5px;
+`;
+
+const Option = styled.option``;
 
 const Table = styled.table`
   /* background-color: pink; */

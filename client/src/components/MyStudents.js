@@ -4,27 +4,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
 import SideMenu from "./DashbordComponents/SideMenu";
 
-const MyClasses = () => {
-  const { userDashboard } = useContext(DashboardContext);
-  const [classes, setClasses] = useState();
-  // console.log(userDashboard);
+const MyStudents = () => {
+  const { userDashboard, usersStudents } = useContext(DashboardContext);
+  //   const [classes, setClasses] = useState();
+  //   console.log(usersStudents);
 
-  const getClasses = async () => {
-    const response = await fetch(`/classlist/${userDashboard.id}`);
-    const data = await response.json();
-    // console.log(data.data);
-    setClasses(data.data);
-  };
+  //   const getClasses = async () => {
+  //     const response = await fetch(`/classlist/${userDashboard.id}`);
+  //     const data = await response.json();
+  //     console.log(data.data);
+  //     setClasses(data.data);
+  //   };
 
-  useEffect(() => {
-    getClasses();
-  }, []);
+  //   useEffect(() => {
+  //     getClasses();
+  //   }, []);
 
   return (
     <Wrapper>
       <SideMenu />
       <SecondaryWrap>
-        <Title>My Classes</Title>
+        <Title>My Students</Title>
         <ClassesWrap>
           <ClassesWrap2>
             {/* <Buttons>
@@ -34,20 +34,19 @@ const MyClasses = () => {
             <Table>
               <Row>
                 <TableTitles>Sheet Name</TableTitles>
-                <TableTitles>Class Code</TableTitles>
+
                 <TableTitles>Grade</TableTitles>
                 <TableTitles>Teacher(s)</TableTitles>
                 <TableTitles>Average</TableTitles>
                 <TableTitles>Median</TableTitles>
               </Row>
-              {!classes ? (
+              {!usersStudents ? (
                 <h1>Loading</h1>
               ) : (
-                classes.map((c) => {
+                usersStudents.map((student) => {
                   return (
-                    <Row>
-                      <Classes>{c.name}</Classes>
-                      <Classes>{c.classID}</Classes>
+                    <Row key={student.id}>
+                      <Classes>{student.name}</Classes>
                       <Classes>5</Classes>
                       <Classes>{userDashboard.name}</Classes>
                       {/* TEMP DATA */}
@@ -65,7 +64,7 @@ const MyClasses = () => {
   );
 };
 
-export default MyClasses;
+export default MyStudents;
 
 const Wrapper = styled.div`
   display: flex;
