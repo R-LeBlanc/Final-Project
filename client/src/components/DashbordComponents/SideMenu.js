@@ -12,7 +12,7 @@ const SideMenu = () => {
       <Links to="/updateProfile">Update Profile</Links>
       <Links to="/myclasses">My Classes</Links>
       <Links to="/mystudentlist">My Students</Links>
-      <Links to="/myreports">My Reports</Links>
+      <Links to="/myreports">My Report Cards</Links>
     </Wrapper>
   );
 };

@@ -12,6 +12,8 @@ import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import UpdateProfile from "./UpdateProfile";
 import MyClasses from "./MyClasses";
+import MyReportCards from "./MyReportCards";
+import MyStudents from "./MyStudents";
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Route path="/announcements" element={<Announcements />}></Route>
         <Route path="/students/:id" element={"Student profile page"}></Route>
         <Route path="/myclasses" element={<MyClasses />}></Route>
+        <Route path="/myreports" element={<MyReportCards />}></Route>
+        <Route path="/mystudentlist" element={<MyStudents />}></Route>
         <Route
           path="/dashboard"
           element={
