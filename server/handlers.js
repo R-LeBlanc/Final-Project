@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const User = require("./Schemas/User");
 const Announcements = require("./Schemas/Announcements");
 const Classes = require("./Schemas/Classes");
+const SCI_GR5 = require("./Schemas/SCI_GR5");
 mongoose.connect(MONGO_URI, () => {
   console.log("connected");
 });
@@ -59,7 +60,7 @@ const getDashBoardInfo = async (req, res) => {
 };
 
 // TODO: convert the rest to mongoose
-
+// Will get a list of the teachers classes from the database
 const getClassList = async (req, res) => {
   const teacherID = req.params.teacherID;
   try {
@@ -68,6 +69,34 @@ const getClassList = async (req, res) => {
       res.status(404).json({ status: 404, message: "Information not found" });
     }
     res.status(200).json({ status: 200, data: classInfo });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+// Will get a single cloass based on the teacher's id ans the class id
+const getClass = async (req, res) => {
+  const teacherID = req.params.teacherID;
+  const classID = req.params.classID;
+  try {
+    const classInfo = await Classes.where("teacher")
+      .equals(teacherID)
+      .where("classID")
+      .equals(classID);
+    if (classInfo.length <= 0) {
+      res.status(404).json({ status: 404, message: "Information not found" });
+    }
+    res.status(200).json({ status: 200, data: classInfo });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const getReportByClass = async (req, res) => {
+  const classID = req.params.classID;
+  try {
+    const reportInfo = await eval(classID).find({});
+    // console.log(reportInfo);
+    res.status(200).json({ status: 200, data: reportInfo });
   } catch (e) {
     console.log(e.message);
   }
@@ -126,6 +155,8 @@ module.exports = {
   getClassNames,
   getDashBoardInfo,
   getClassList,
+  getClass,
   // getSubjects,
+  getReportByClass,
   getStudents,
 };

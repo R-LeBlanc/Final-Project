@@ -13,7 +13,7 @@ const ClassesPreview = () => {
         <h1>Loading</h1>
       ) : (
         userDashboard.classes.map((c) => {
-          return <p>{c}</p>;
+          return <p key={c}>{c}</p>;
         })
       )}
     </Wrapper>

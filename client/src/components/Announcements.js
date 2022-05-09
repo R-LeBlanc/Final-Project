@@ -29,7 +29,7 @@ const Announcements = () => {
     fetch(`/announcements/${event.target.id}`)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data);
+        console.log(data.data);
         setAnnouncements(data.data);
       });
   };
@@ -37,7 +37,7 @@ const Announcements = () => {
   const announceArray = () => {
     return announcements.map((announcement) => {
       return (
-        <Wrapper key={announcement._id}>
+        <Wrapper key={announcement.title}>
           <Title>{announcement.title}</Title>
           <Message>{announcement.message}</Message>
         </Wrapper>

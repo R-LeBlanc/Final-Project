@@ -4,7 +4,9 @@ const {
   getClassNames,
   getDashBoardInfo,
   getClassList,
+  getClass,
   getSubjects,
+  getReportByClass,
   getStudents,
 } = require("./handlers");
 // const {
@@ -23,8 +25,12 @@ app.get("/announcements/:id", getAnnouncements);
 app.get("/announcements", getClassNames);
 // Will get the users information
 app.get("/dashboard/:id", getDashBoardInfo);
-
-app.get("/classlist/:teacherID", getClassList);
+// Will get a list of the teachers classes from the database
+app.get("/classlist/:teacherID/", getClassList);
+// Will get a single class from the database
+app.get("/classlist/:teacherID/:classID", getClass);
+// Will get the report card info fo the selected class
+app.get("/report/:classID", getReportByClass);
 // app.get("/subjects", getSubjects);
 app.get("/students/:id", getStudents);
 // this is our catch all endpoint.

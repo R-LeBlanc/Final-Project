@@ -25,34 +25,46 @@ const Dashboard = () => {
     const response = await fetch(`/dashboard/${currentUser.email}`);
     const data = await response.json();
     setUserDashboard(data.data[0]);
+    return data.data[0];
   };
   // gets the teacher's students based of the id's retrieved in the teacher dashboard
-  const getStudents = async () => {
+  const getStudents = async (result1) => {
     const studentArray = [];
-    userDashboard.students.map(async (student) => {
+    const promises = [];
+    result1.students.map(async (student) => {
       const response = await fetch(`/students/${student}`);
       const data = await response.json();
-      studentArray.push(data.data[0]);
+      promises.push(data.data[0]);
     });
-    setUsersStudents(studentArray);
+    Promise.all(promises).then((data) => {
+      console.log(data);
+    });
+    setUsersStudents(promises);
     // console.log(usersStudents);
   };
   // *************************************
 
   useEffect(() => {
+    const asyncFunction = async () => {
+      let result1 = await dashboardAndStudents();
+      getStudents(result1);
+      // if (userDashboard) {
+      // }
+      //   getStudents();
+      setDashboardLoading(false);
+    };
     // can try moving this to the sign in page?
-    dashboardAndStudents();
-
-    // if (userDashboard) {
-    // }
-    //   getStudents();
-    // setDashboardLoading(false);
+    // await dashboardAndStudents();
+    asyncFunction();
   }, []);
 
-  useEffect(() => {
-    getStudents();
-    setDashboardLoading(false);
-  }, [userDashboard]);
+  // useEffect(() => {
+  //   if (userDashboard) {
+  //     console.log("did this happen");
+  //     getStudents();
+  //     setDashboardLoading(false);
+  //   }
+  // }, [userDashboard]);
   // onAuthStateChanged(auth, (user) => {
   //   if (user) {
   //     console.log(user.email, user.displayName);
@@ -76,7 +88,7 @@ const Dashboard = () => {
           {!dashboardLoading && (
             // Preview components for dashboard
             <ComponentWrapper>
-              <StudentPreview />
+              {usersStudents && <StudentPreview />}
               <LeftSide>
                 <ChartWrap>
                   <h2>Class Average's</h2>

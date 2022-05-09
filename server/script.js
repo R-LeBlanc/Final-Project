@@ -58,19 +58,52 @@ mongoose.connect(MONGO_URI, () => {
 
 const addClasses = async () => {
   try {
-    const classes = await Classes.create({
-      name: "Math",
-      classID: "MA-GR5",
-      units: [
-        "Numbers",
-        "Algebra",
-        "Data",
-        "Stpacial Sense",
-        "Financial Literacy",
-      ],
-      students: [789462, 894135, 834695],
-      teacher: 123456,
-    });
+    const classes = await Classes.create([
+      {
+        name: "Math",
+        classID: "MA_GR5",
+        units: [
+          "Numbers",
+          "Algebra",
+          "Data",
+          "Spacial Sense",
+          "Financial Literacy",
+        ],
+        students: [789462, 894135, 834695],
+        teacher: 123456,
+      },
+      {
+        name: "English",
+        classID: "ENG_GR5",
+        units: ["Oral Presentation", "Reading", "Writing", "Media Literacy"],
+        students: [
+          789462,
+
+          894135,
+
+          834695,
+        ],
+        teacher: 123456,
+      },
+      {
+        name: "Science",
+        classID: "SCI_GR5",
+        units: [
+          "Earth and Space",
+          "Life Systems",
+          "Matter and Energy",
+          "Structures and Mechanisms",
+        ],
+        students: [
+          789462,
+
+          894135,
+
+          834695,
+        ],
+        teacher: 123456,
+      },
+    ]);
     console.log(classes);
   } catch (e) {
     console.log(e.message);
@@ -116,4 +149,4 @@ const addReport = async () => {
   }
 };
 
-addReport();
+// addReport();

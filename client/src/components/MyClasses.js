@@ -45,7 +45,7 @@ const MyClasses = () => {
               ) : (
                 classes.map((c) => {
                   return (
-                    <Row>
+                    <Row key={c.classID}>
                       <Classes>{c.name}</Classes>
                       <Classes>{c.classID}</Classes>
                       <Classes>5</Classes>
