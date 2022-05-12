@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const User = require("./Schemas/User");
 const Classes = require("./Schemas/Classes");
 const SCI_GR5 = require("./Schemas/SCI_GR5");
+const ENG_GR5 = require("./Schemas/ENG_GR5");
+const MA_GR5 = require("./Schemas/MA_GR5");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 mongoose.connect(MONGO_URI, () => {
@@ -114,35 +116,96 @@ const addClasses = async () => {
 
 const addReport = async () => {
   try {
-    const reports = await SCI_GR5.create([
+    const reports = await MA_GR5.create([
       {
         firstName: "Josie",
         lastName: "Arnold",
         studentID: 789462,
-        EarthAndSpace: 75,
-        LifeSystems: 83,
-        MatterAndEnergy: 90,
-        StructuresAndMechanisms: 92,
+        Numbers: 90,
+        Algebra: 81,
+        Data: 76,
+        SpacialSense: 89,
+        FinancialLiteracy: 79,
       },
       {
         firstName: "Charlie",
         lastName: "Horton",
         studentID: 894135,
-        EarthAndSpace: 65,
-        LifeSystems: 74,
-        MatterAndEnergy: 80,
-        StructuresAndMechanisms: 79,
+        Numbers: 72,
+        Algebra: 70,
+        Data: 83,
+        SpacialSense: 76,
+        FinancialLiteracy: 81,
       },
       {
         firstName: "Ayat",
         lastName: "Austin",
         studentID: 834695,
-        EarthAndSpace: 72,
-        LifeSystems: 79,
-        MatterAndEnergy: 86,
-        StructuresAndMechanisms: 83,
+        Numbers: 86,
+        Algebra: 73,
+        Data: 75,
+        SpacialSense: 85,
+        FinancialLiteracy: 82,
       },
     ]);
+    //   {
+    //     firstName: "Josie",
+    //     lastName: "Arnold",
+    //     studentID: 789462,
+    //     OralPresentation: 79,
+    //     Reading: 72,
+    //     Writing: 76,
+    //     MediaLiteracy: 81,
+    //   },
+    //   {
+    //     firstName: "Charlie",
+    //     lastName: "Horton",
+    //     studentID: 894135,
+    //     OralPresentation: 90,
+    //     Reading: 93,
+    //     Writing: 89,
+    //     MediaLiteracy: 87,
+    //   },
+    //   {
+    //     firstName: "Ayat",
+    //     lastName: "Austin",
+    //     studentID: 834695,
+    //     OralPresentation: 71,
+    //     Reading: 90,
+    //     Writing: 86,
+    //     MediaLiteracy: 89,
+    //   },
+    // ]);
+    // const reports = await SCI_GR5.create([
+    //   {
+    //     firstName: "Josie",
+    //     lastName: "Arnold",
+    //     studentID: 789462,
+    //     EarthAndSpace: 75,
+    //     LifeSystems: 83,
+    //     MatterAndEnergy: 90,
+    //     StructuresAndMechanisms: 92,
+    //   },
+    //   {
+    //     firstName: "Charlie",
+    //     lastName: "Horton",
+    //     studentID: 894135,
+    //     EarthAndSpace: 65,
+    //     LifeSystems: 74,
+    //     MatterAndEnergy: 80,
+    //     StructuresAndMechanisms: 79,
+    //   },
+    //   {
+    //     firstName: "Ayat",
+    //     lastName: "Austin",
+    //     studentID: 834695,
+    //     EarthAndSpace: 72,
+    //     LifeSystems: 79,
+    //     MatterAndEnergy: 86,
+    //     StructuresAndMechanisms: 83,
+    //   },
+    // ]);
+
     console.log(reports);
   } catch (e) {
     console.log(e.message);

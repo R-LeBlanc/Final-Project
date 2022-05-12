@@ -2,10 +2,13 @@ import styled from "styled-components";
 import React, { useContext, useEffect, useState } from "react";
 
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
+import { ReportContext } from "./ReportCardComponents/ReportContext";
 import SideMenu from "./DashbordComponents/SideMenu";
+import ScienceReport from "./ReportCardComponents/ScienceReport";
 
 const MyReportCards = () => {
   const { userDashboard, usersStudents } = useContext(DashboardContext);
+  const { grades, setGrades, allClasses } = useContext(ReportContext);
   const [classes, setClasses] = useState();
   const [selectedClass, setSelectedClass] = useState();
   // console.log(userDashboard);
@@ -23,17 +26,22 @@ const MyReportCards = () => {
       `/classlist/${userDashboard.id}/${event.target.value}`
     );
     const data1 = await res.json();
-    console.log(data1.data[0]);
+    // console.log(data1.data[0]);
     setClasses(data1.data[0]);
+    // TODO: Maybe fetch all the grades for the class at once?
+    // Also fetch them in the dashboard home so that i can access
+    // them on other pages too
     const response = await fetch(`/report/${event.target.value}`);
     const data = await response.json();
-    console.log(data.data);
-    setSelectedClass(data.data);
+    setGrades(data.data);
   };
 
-  // useEffect(() => {
-  //   getClasses();
-  // }, []);
+  // TODO: create a function that will calculate the final grade everytime
+  // a grade is changed
+  const calculateFinal = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.key);
+  };
 
   return (
     <Wrapper>
@@ -41,62 +49,73 @@ const MyReportCards = () => {
       <SecondaryWrap>
         <Title>My Report Cards</Title>
         <ClassesWrap>
-          <ClassesWrap2>
-            <Buttons>
-              <View>Select a class:</View>
-              <Select
-                id="classSelect"
-                name="classSelect"
-                onChange={(event) => {
-                  handleOnClick(event);
-                }}
-              >
-                {userDashboard &&
-                  userDashboard.classes.map((c) => {
-                    return <Option key={c}>{c}</Option>;
+          {/* <ClassesWrap2> */}
+          <Buttons>
+            <View>Select a class:</View>
+            <Select
+              id="classSelect"
+              name="classSelect"
+              onChange={(event) => {
+                handleOnClick(event);
+              }}
+            >
+              {userDashboard &&
+                userDashboard.classes.map((c) => {
+                  return <Option key={c}>{c}</Option>;
+                })}
+            </Select>
+          </Buttons>
+          {classes && classes.classID === "SCI_GR5" ? (
+            <ScienceReport classes={classes} />
+          ) : (
+            ""
+          )}
+          {/* <Table>
+            <thead>
+              <Row>
+                <TableTitles>Name</TableTitles>
+               
+                {classes &&
+                  classes.units.map((unit) => {
+                    return <TableTitles key={unit}>{unit}</TableTitles>;
                   })}
-              </Select>
-            </Buttons>
-            <Table>
-              <thead>
-                <Row>
-                  <TableTitles>Name</TableTitles>
-                  {/* Maps through the units array in the class a creates a table title for each unit */}
-                  {classes &&
-                    classes.units.map((unit) => {
-                      return <TableTitles key={unit}>{unit}</TableTitles>;
-                    })}
-                  <TableTitles>Final Grade</TableTitles>
-                </Row>
-              </thead>
-              <tbody>
-                {selectedClass &&
-                  selectedClass.map((c) => {
-                    return (
-                      <>
-                        <Row key={c.id}></Row>
-                        <Classes>{c.firstName + " " + c.lastName}</Classes>
-                        <Classes>
-                          <Input
-                            defaultValue={c.EarthAndSpace}
-                            size="4"
-                          ></Input>
-                        </Classes>
-                        <Classes>
-                          <Input defaultValue={c.LifeSystems} size="4"></Input>
-                        </Classes>
-                        <Classes>
-                          <Input
-                            defaultValue={c.MatterAndEnergy}
-                            size="4"
-                          ></Input>
-                        </Classes>
-                        <Classes>
-                          <Input
-                            defaultValue={c.StructuresAndMechanisms}
-                            size="4"
-                          ></Input>
-                        </Classes>
+                <TableTitles>Final Grade</TableTitles>
+                <TableTitles>Comments</TableTitles>
+              </Row>
+            </thead>
+            <tbody>
+              {grades &&
+                grades.map((c) => {
+                  return (
+                    <>
+                      <Row key={c.id}></Row>
+                      <Classes>{c.firstName + " " + c.lastName}</Classes>
+                      <Classes>
+                        <Input
+                          key={c.id}
+                          defaultValue={c.EarthAndSpace}
+                          size="4"
+                          onChange={(e) => {
+                            calculateFinal(e);
+                          }}
+                        ></Input>
+                      </Classes>
+                      <Classes>
+                        <Input defaultValue={c.LifeSystems} size="4"></Input>
+                      </Classes>
+                      <Classes>
+                        <Input
+                          defaultValue={c.MatterAndEnergy}
+                          size="4"
+                        ></Input>
+                      </Classes>
+                      <Classes>
+                        <Input
+                          defaultValue={c.StructuresAndMechanisms}
+                          size="4"
+                        ></Input>
+                      </Classes>
+                      {classes && (
                         <Classes>
                           {(c.EarthAndSpace +
                             c.LifeSystems +
@@ -104,12 +123,17 @@ const MyReportCards = () => {
                             c.StructuresAndMechanisms) /
                             classes.units.length}
                         </Classes>
-                      </>
-                    );
-                  })}
-              </tbody>
-            </Table>
-            {/* <Table>
+                      )}
+                      <Classes>
+                        <Comment rows={10} cols={50}></Comment>
+                      </Classes>
+                    </>
+                  );
+                })}
+            </tbody>
+          </Table> */}
+          {/* ************************************************* */}
+          {/* <Table>
               <thead>
                 <Row>
                   
@@ -131,7 +155,7 @@ const MyReportCards = () => {
                         <Classes>5</Classes>
                         <Classes>{userDashboard.name}</Classes>
                         {/* TEMP DATA */}
-            {/* <Classes>78</Classes>
+          {/* <Classes>78</Classes>
                         <Classes>70</Classes>
                       </Row>
                     );
@@ -139,7 +163,7 @@ const MyReportCards = () => {
                 )}
               </tbody>
             </Table> */}
-          </ClassesWrap2>
+          {/* </ClassesWrap2> */}
         </ClassesWrap>
       </SecondaryWrap>
     </Wrapper>
@@ -172,7 +196,7 @@ const ClassesWrap = styled.div`
   /* color: white; */
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
   height: 100%;
 `;
@@ -180,7 +204,7 @@ const ClassesWrap = styled.div`
 const ClassesWrap2 = styled.div`
   background-color: var(--primary-color);
   border-radius: 15px;
-  color: white;
+  /* color: white; */
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -256,3 +280,5 @@ const Classes = styled.td`
 `;
 
 const Input = styled.input``;
+
+const Comment = styled.textarea``;

@@ -73,7 +73,7 @@ const getClassList = async (req, res) => {
     console.log(e.message);
   }
 };
-// Will get a single cloass based on the teacher's id ans the class id
+// Will get a single class based on the teacher's id and the class id
 const getClass = async (req, res) => {
   const teacherID = req.params.teacherID;
   const classID = req.params.classID;
@@ -138,6 +138,7 @@ const getReportByClass = async (req, res) => {
 //     });
 // };
 
+// TODO: Will grab all students by teacher
 const getStudents = async (req, res) => {
   const id = req.params.id;
   try {
