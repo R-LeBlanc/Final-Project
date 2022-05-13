@@ -17,6 +17,8 @@ const ScienceReportSchema = new mongoose.Schema({
   LifeSystems: Number,
   MatterAndEnergy: Number,
   StructuresAndMechanisms: Number,
+  FinalGrade: Number,
+  Comment: String,
 });
 
 module.exports = mongoose.model("SCI_GR5", ScienceReportSchema);

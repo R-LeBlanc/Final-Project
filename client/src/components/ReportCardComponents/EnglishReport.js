@@ -5,7 +5,14 @@ import { ReportContext } from "./ReportContext";
 
 const EnglishReport = ({ classes }) => {
   const { grades } = useContext(ReportContext);
-  console.log("", classes);
+  console.log("", grades);
+
+  // const getComment = async () => {
+  //   grades.map((student) => {
+  //     const response =  await fetch(`/comment/${classes.classID}/`)
+
+  //   })
+  // }
 
   const calculateFinal = (e) => {
     console.log(e.target.value);

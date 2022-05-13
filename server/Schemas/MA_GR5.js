@@ -18,6 +18,8 @@ const MathReportSchema = new mongoose.Schema({
   Data: Number,
   SpacialSense: Number,
   FinancialLiteracy: Number,
+  FinalGrade: Number,
+  Comment: String,
 });
 
 module.exports = mongoose.model("MA_GR5", MathReportSchema);

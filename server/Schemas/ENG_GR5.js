@@ -17,6 +17,8 @@ const EnglishReportSchema = new mongoose.Schema({
   Reading: Number,
   Writing: Number,
   MediaLiteracy: Number,
+  FinalGrade: Number,
+  Comment: String,
 });
 
 module.exports = mongoose.model("ENG_GR5", EnglishReportSchema);

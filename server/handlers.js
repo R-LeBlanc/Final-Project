@@ -97,9 +97,25 @@ const getClass = async (req, res) => {
 const getReportByClass = async (req, res) => {
   const classID = req.params.classID;
   try {
-    // console.log(classID);
     const reportInfo = await eval(classID).find({});
     res.status(200).json({ status: 200, data: reportInfo });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+// Will update the report information based on the class
+const updateReportByClass = async (req, res) => {
+  const classID = req.params.classID;
+  try {
+    req.body.map(async (student) => {
+      const updateInfo = await eval(classID).findOne({
+        studentID: student.studentID,
+      });
+      // console.log(updateInfo);
+      updateInfo.overwrite(student);
+      await updateInfo.save();
+    });
+    res.status(200).json({ status: 200, message: "Report info updated" });
   } catch (e) {
     console.log(e.message);
   }
@@ -180,5 +196,6 @@ module.exports = {
   getReportComment,
   // getSubjects,
   getReportByClass,
+  updateReportByClass,
   getStudents,
 };
