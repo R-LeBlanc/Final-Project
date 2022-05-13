@@ -5,7 +5,7 @@ const {
   getDashBoardInfo,
   getClassList,
   getClass,
-  getSubjects,
+  getReportComment,
   getReportByClass,
   getStudents,
 } = require("./handlers");
@@ -33,6 +33,8 @@ app.get("/classlist/:teacherID/:classID", getClass);
 app.get("/report/:classID", getReportByClass);
 // app.get("/subjects", getSubjects);
 app.get("/students/:id", getStudents);
+// Will get a reportcard comment from the comment bank
+app.get("/comment/:classID/:rank", getReportComment);
 // this is our catch all endpoint.
 app.get("*", (req, res) => {
   res.status(404).json({

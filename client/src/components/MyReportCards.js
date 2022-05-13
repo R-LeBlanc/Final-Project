@@ -5,13 +5,15 @@ import { DashboardContext } from "./DashbordComponents/DashboardContext";
 import { ReportContext } from "./ReportCardComponents/ReportContext";
 import SideMenu from "./DashbordComponents/SideMenu";
 import ScienceReport from "./ReportCardComponents/ScienceReport";
+import EnglishReport from "./ReportCardComponents/EnglishReport";
+import MathReport from "./ReportCardComponents/MathReport";
 
 const MyReportCards = () => {
   const { userDashboard, usersStudents } = useContext(DashboardContext);
   const { grades, setGrades, allClasses } = useContext(ReportContext);
   const [classes, setClasses] = useState();
   const [selectedClass, setSelectedClass] = useState();
-  // console.log(userDashboard);
+  console.log("", usersStudents);
 
   // const getClasses = async () => {
   //   const response = await fetch(`/classlist/${userDashboard.id}`);
@@ -70,100 +72,16 @@ const MyReportCards = () => {
           ) : (
             ""
           )}
-          {/* <Table>
-            <thead>
-              <Row>
-                <TableTitles>Name</TableTitles>
-               
-                {classes &&
-                  classes.units.map((unit) => {
-                    return <TableTitles key={unit}>{unit}</TableTitles>;
-                  })}
-                <TableTitles>Final Grade</TableTitles>
-                <TableTitles>Comments</TableTitles>
-              </Row>
-            </thead>
-            <tbody>
-              {grades &&
-                grades.map((c) => {
-                  return (
-                    <>
-                      <Row key={c.id}></Row>
-                      <Classes>{c.firstName + " " + c.lastName}</Classes>
-                      <Classes>
-                        <Input
-                          key={c.id}
-                          defaultValue={c.EarthAndSpace}
-                          size="4"
-                          onChange={(e) => {
-                            calculateFinal(e);
-                          }}
-                        ></Input>
-                      </Classes>
-                      <Classes>
-                        <Input defaultValue={c.LifeSystems} size="4"></Input>
-                      </Classes>
-                      <Classes>
-                        <Input
-                          defaultValue={c.MatterAndEnergy}
-                          size="4"
-                        ></Input>
-                      </Classes>
-                      <Classes>
-                        <Input
-                          defaultValue={c.StructuresAndMechanisms}
-                          size="4"
-                        ></Input>
-                      </Classes>
-                      {classes && (
-                        <Classes>
-                          {(c.EarthAndSpace +
-                            c.LifeSystems +
-                            c.MatterAndEnergy +
-                            c.StructuresAndMechanisms) /
-                            classes.units.length}
-                        </Classes>
-                      )}
-                      <Classes>
-                        <Comment rows={10} cols={50}></Comment>
-                      </Classes>
-                    </>
-                  );
-                })}
-            </tbody>
-          </Table> */}
-          {/* ************************************************* */}
-          {/* <Table>
-              <thead>
-                <Row>
-                  
-                  <TableTitles>Name</TableTitles>
-                  <TableTitles>Grade</TableTitles>
-                  <TableTitles>Teacher(s)</TableTitles>
-                  <TableTitles>Average</TableTitles>
-                  <TableTitles>Median</TableTitles>
-                </Row>
-              </thead>
-              <tbody>
-                {!usersStudents ? (
-                  <h1>Loading</h1>
-                ) : (
-                  usersStudents.map((student) => {
-                    return (
-                      <Row key={student.id}>
-                        <Classes>{student.name}</Classes>
-                        <Classes>5</Classes>
-                        <Classes>{userDashboard.name}</Classes>
-                        {/* TEMP DATA */}
-          {/* <Classes>78</Classes>
-                        <Classes>70</Classes>
-                      </Row>
-                    );
-                  })
-                )}
-              </tbody>
-            </Table> */}
-          {/* </ClassesWrap2> */}
+          {classes && classes.classID === "ENG_GR5" ? (
+            <EnglishReport classes={classes} />
+          ) : (
+            ""
+          )}
+          {classes && classes.classID === "MA_GR5" ? (
+            <MathReport classes={classes} />
+          ) : (
+            ""
+          )}
         </ClassesWrap>
       </SecondaryWrap>
     </Wrapper>
@@ -239,46 +157,3 @@ const Select = styled.select`
 `;
 
 const Option = styled.option``;
-
-const ReportWrap = styled.div`
-  /* background-color: pink; */
-  display: flex;
-  justify-content: space-evenly;
-  height: 50%;
-  width: 70%;
-`;
-
-const Table = styled.table`
-  /* background-color: pink; */
-  font-family: var(--font-body);
-  text-align: left;
-  width: 90%;
-
-  th,
-  td {
-    border: 1px solid var(--accent-color);
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: var(--secondary-color);
-  }
-`;
-
-const Row = styled.tr``;
-
-const TableTitles = styled.th`
-  /* background-color: var(--accent-color); */
-  font-family: var(--font-header);
-`;
-
-const Classes = styled.td`
-  /* background-color: pink; */
-  /* display: flex;
-  justify-content: space-evenly;
-  width: 100%; */
-`;
-
-const Input = styled.input``;
-
-const Comment = styled.textarea``;

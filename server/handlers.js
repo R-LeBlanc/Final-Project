@@ -10,6 +10,9 @@ const User = require("./Schemas/User");
 const Announcements = require("./Schemas/Announcements");
 const Classes = require("./Schemas/Classes");
 const SCI_GR5 = require("./Schemas/SCI_GR5");
+const ENG_GR5 = require("./Schemas/ENG_GR5");
+const MA_GR5 = require("./Schemas/MA_GR5");
+const ReportComments = require("./Schemas/Comments");
 mongoose.connect(MONGO_URI, () => {
   console.log("connected");
 });
@@ -94,9 +97,26 @@ const getClass = async (req, res) => {
 const getReportByClass = async (req, res) => {
   const classID = req.params.classID;
   try {
+    // console.log(classID);
     const reportInfo = await eval(classID).find({});
-    // console.log(reportInfo);
     res.status(200).json({ status: 200, data: reportInfo });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const getReportComment = async (req, res) => {
+  const classID = req.params.classID;
+  const rank = req.params.rank;
+  try {
+    const comment = await ReportComments.where("classID")
+      .equals(classID)
+      .where("rank")
+      .equals(rank);
+    if (comment.length <= 0) {
+      res.status(404).json({ status: 404, message: "Information not found" });
+    }
+    res.status(200).json({ status: 200, data: comment });
   } catch (e) {
     console.log(e.message);
   }
@@ -157,6 +177,7 @@ module.exports = {
   getDashBoardInfo,
   getClassList,
   getClass,
+  getReportComment,
   // getSubjects,
   getReportByClass,
   getStudents,

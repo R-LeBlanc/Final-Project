@@ -4,6 +4,7 @@ const Classes = require("./Schemas/Classes");
 const SCI_GR5 = require("./Schemas/SCI_GR5");
 const ENG_GR5 = require("./Schemas/ENG_GR5");
 const MA_GR5 = require("./Schemas/MA_GR5");
+const ReportComments = require("./Schemas/Comments");
 require("dotenv").config();
 const { MONGO_URI } = process.env;
 mongoose.connect(MONGO_URI, () => {
@@ -212,4 +213,34 @@ const addReport = async () => {
   }
 };
 
+const addComment = async () => {
+  try {
+    const comments = await ReportComments.create([
+      {
+        classID: "ENG_GR5",
+        rank: "Exellent",
+        comment:
+          "${name} shows the ability to quickly use spelling, punctuation and grammar rules that were recently taught. ${He/she} is able to quickly learn new skills and is eager to apply them to ${his/her} writing.",
+      },
+      {
+        classID: "ENG_GR5",
+        rank: "Satisfactory",
+        comment:
+          "${name} makes a good effort to make ${his/her} handwriting legible. ${He/she} is able to print on the lines, use good spacing, and form letters correctly.",
+      },
+      {
+        classID: "ENG_GR5",
+        rank: "Needs Imporvement",
+        comment:
+          "${name} has difficulty remembering previously discussed writing skills and often makes errors with punctuation, grammar, and overall sentence structure. Basic writing skills need improvement.",
+      },
+    ]);
+    console.log(comments);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 // addReport();
+
+// addComment();

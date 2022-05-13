@@ -3,9 +3,9 @@ import React, { useContext } from "react";
 
 import { ReportContext } from "./ReportContext";
 
-const ScienceReport = ({ classes }) => {
+const MathReport = ({ classes }) => {
   const { grades } = useContext(ReportContext);
-  //   console.log("", classes);
+  console.log("", classes);
 
   const calculateFinal = (e) => {
     console.log(e.target.value);
@@ -34,8 +34,7 @@ const ScienceReport = ({ classes }) => {
                 <Classes>{c.firstName + " " + c.lastName}</Classes>
                 <Classes>
                   <Input
-                    key={c.id}
-                    defaultValue={c.EarthAndSpace}
+                    defaultValue={c.Numbers}
                     size="4"
                     onChange={(e) => {
                       calculateFinal(e);
@@ -43,23 +42,24 @@ const ScienceReport = ({ classes }) => {
                   ></Input>
                 </Classes>
                 <Classes>
-                  <Input defaultValue={c.LifeSystems} size="4"></Input>
+                  <Input defaultValue={c.Algebra} size="4"></Input>
                 </Classes>
                 <Classes>
-                  <Input defaultValue={c.MatterAndEnergy} size="4"></Input>
+                  <Input defaultValue={c.Data} size="4"></Input>
                 </Classes>
                 <Classes>
-                  <Input
-                    defaultValue={c.StructuresAndMechanisms}
-                    size="4"
-                  ></Input>
+                  <Input defaultValue={c.SpacialSense} size="4"></Input>
+                </Classes>
+                <Classes>
+                  <Input defaultValue={c.FinancialLiteracy} size="4"></Input>
                 </Classes>
                 {classes && (
                   <Classes>
-                    {(c.EarthAndSpace +
-                      c.LifeSystems +
-                      c.MatterAndEnergy +
-                      c.StructuresAndMechanisms) /
+                    {(c.Numbers +
+                      c.Algebra +
+                      c.Data +
+                      c.SpacialSense +
+                      c.FinancialLiteracy) /
                       classes.units.length}
                   </Classes>
                 )}
@@ -74,7 +74,7 @@ const ScienceReport = ({ classes }) => {
   );
 };
 
-export default ScienceReport;
+export default MathReport;
 
 const Table = styled.table`
   /* background-color: pink; */
