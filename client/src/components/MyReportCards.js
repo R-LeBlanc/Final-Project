@@ -13,7 +13,7 @@ const MyReportCards = () => {
   const { grades, setGrades, allClasses } = useContext(ReportContext);
   const [classes, setClasses] = useState();
   const [selectedClass, setSelectedClass] = useState();
-  console.log("", usersStudents);
+  // console.log("", usersStudents);
 
   // const getClasses = async () => {
   //   const response = await fetch(`/classlist/${userDashboard.id}`);
@@ -144,16 +144,16 @@ const View = styled.label`
   font-size: 1.5rem;
   padding: 5px 10px;
   margin-left: 7px;
-
-  &:hover {
-    color: white;
-    background-color: var(--accent-color);
-    cursor: pointer;
-  }
 `;
 
 const Select = styled.select`
   border-radius: 5px;
+
+  &:hover {
+    /* color: white;
+    background-color: var(--accent-color); */
+    cursor: pointer;
+  }
 `;
 
 const Option = styled.option``;
