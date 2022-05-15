@@ -33,14 +33,17 @@ const EnglishReport = ({ classes }) => {
   const submit = (e) => {
     e.preventDefault();
     // console.log(form.current);
-    const data = new FormData(form.current);
+    // const data = new FormData(form.current);
     // checks the form data
     // for (var pair of data.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
     fetch(`/report/${classes.classID}`, {
       method: "PATCH",
-      body: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(grades),
     })
       .then((res) => res.json())
       .then((data) => console.log(data));
@@ -54,103 +57,103 @@ const EnglishReport = ({ classes }) => {
 
   return (
     <>
-      {/* <Form ref={form} onSubmit={submit}> */}
-      <Save type="submit" name="Save All"></Save>
-      <Table>
-        <thead>
-          <Row>
-            <TableTitles>Name</TableTitles>
-            {/* Maps through the units array in the class a creates a table title for each unit */}
-            {classes &&
-              classes.units.map((unit) => {
-                return <TableTitles key={unit}>{unit}</TableTitles>;
-              })}
-            <TableTitles>Final Grade</TableTitles>
-            <TableTitles>Comments</TableTitles>
-          </Row>
-        </thead>
-        <tbody>
-          {grades &&
-            grades.map((c) => {
-              return (
-                <Row key={c.studentID}>
-                  <Classes>{c.firstName + " " + c.lastName}</Classes>
-                  <Classes>
-                    <Input
-                      id="OralPresentation"
-                      type="text"
-                      defaultValue={c.OralPresentation}
-                      size="4"
-                      onChange={(e) => {
-                        handleOnChange(e, c);
-                      }}
-                    ></Input>
-                  </Classes>
-                  <Classes>
-                    <Input
-                      id="Reading"
-                      type="text"
-                      // name="grades[][Reading]"
-                      defaultValue={c.Reading}
-                      size="4"
-                      onChange={(e) => {
-                        handleOnChange(e, c);
-                      }}
-                    ></Input>
-                  </Classes>
-                  <Classes>
-                    <Input
-                      id="Writing"
-                      type="text"
-                      // name="grades[][Writing]"
-                      defaultValue={c.Writing}
-                      size="4"
-                      onChange={(e) => {
-                        handleOnChange(e, c);
-                      }}
-                    ></Input>
-                  </Classes>
-                  <Classes>
-                    <Input
-                      id="MediaLiteracy"
-                      type="text"
-                      // name="grades[][MediaLiteracy]"
-                      defaultValue={c.MediaLiteracy}
-                      size="4"
-                      onChange={(e) => {
-                        handleOnChange(e, c);
-                      }}
-                    ></Input>
-                  </Classes>
-                  {classes && (
+      <Form ref={form} onSubmit={submit}>
+        <Save type="submit" name="Save All"></Save>
+        <Table>
+          <thead>
+            <Row>
+              <TableTitles>Name</TableTitles>
+              {/* Maps through the units array in the class a creates a table title for each unit */}
+              {classes &&
+                classes.units.map((unit) => {
+                  return <TableTitles key={unit}>{unit}</TableTitles>;
+                })}
+              <TableTitles>Final Grade</TableTitles>
+              <TableTitles>Comments</TableTitles>
+            </Row>
+          </thead>
+          <tbody>
+            {grades &&
+              grades.map((c) => {
+                return (
+                  <Row key={c.studentID}>
+                    <Classes>{c.firstName + " " + c.lastName}</Classes>
                     <Classes>
                       <Input
-                        id="FinalGrade"
+                        id="OralPresentation"
                         type="text"
-                        // name="grades[][FinalGrade]"
-                        defaultValue={c.FinalGrade}
+                        defaultValue={c.OralPresentation}
                         size="4"
                         onChange={(e) => {
                           handleOnChange(e, c);
                         }}
-                      >
-                        {/* {(c.OralPresentation +
+                      ></Input>
+                    </Classes>
+                    <Classes>
+                      <Input
+                        id="Reading"
+                        type="text"
+                        // name="grades[][Reading]"
+                        defaultValue={c.Reading}
+                        size="4"
+                        onChange={(e) => {
+                          handleOnChange(e, c);
+                        }}
+                      ></Input>
+                    </Classes>
+                    <Classes>
+                      <Input
+                        id="Writing"
+                        type="text"
+                        // name="grades[][Writing]"
+                        defaultValue={c.Writing}
+                        size="4"
+                        onChange={(e) => {
+                          handleOnChange(e, c);
+                        }}
+                      ></Input>
+                    </Classes>
+                    <Classes>
+                      <Input
+                        id="MediaLiteracy"
+                        type="text"
+                        // name="grades[][MediaLiteracy]"
+                        defaultValue={c.MediaLiteracy}
+                        size="4"
+                        onChange={(e) => {
+                          handleOnChange(e, c);
+                        }}
+                      ></Input>
+                    </Classes>
+                    {classes && (
+                      <Classes>
+                        <Input
+                          id="FinalGrade"
+                          type="text"
+                          // name="grades[][FinalGrade]"
+                          defaultValue={c.FinalGrade}
+                          size="4"
+                          onChange={(e) => {
+                            handleOnChange(e, c);
+                          }}
+                        >
+                          {/* {(c.OralPresentation +
                         c.Reading +
                         c.Writing +
                         c.MediaLiteracy) /
                         classes.units.length} */}
-                      </Input>
+                        </Input>
+                      </Classes>
+                    )}
+                    <Classes>
+                      <Comment rows={10} cols={50}></Comment>
                     </Classes>
-                  )}
-                  <Classes>
-                    <Comment rows={10} cols={50}></Comment>
-                  </Classes>
-                </Row>
-              );
-            })}
-        </tbody>
-      </Table>
-      {/* </Form> */}
+                  </Row>
+                );
+              })}
+          </tbody>
+        </Table>
+      </Form>
     </>
   );
 };

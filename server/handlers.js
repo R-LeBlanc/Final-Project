@@ -106,7 +106,7 @@ const getReportByClass = async (req, res) => {
 // Will update the report information for students based on the class
 const updateReportByClass = async (req, res) => {
   const classID = req.params.classID;
-  console.log(req.body);
+  // console.log(req.body);
   try {
     req.body.map(async (student) => {
       const updateInfo = await eval(classID).findOne({
