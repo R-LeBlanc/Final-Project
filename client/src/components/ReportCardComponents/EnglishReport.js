@@ -5,7 +5,7 @@ import { ReportContext } from "./ReportContext";
 
 const EnglishReport = ({ classes }) => {
   const { grades, setGrades } = useContext(ReportContext);
-  const form = useRef(null);
+  // const form = useRef(null);
   console.log("", grades);
   // console.log("", classes);
   // const getComment = async () => {
@@ -30,14 +30,39 @@ const EnglishReport = ({ classes }) => {
     );
   };
 
+  const getComments = async () => {
+    // const promise = await Promise.all(
+    grades.map(async (student) => {
+      const response = await fetch(
+        `/comment/${classes.classID}/${student.FinalGrade}`
+      );
+      const data = await response.json();
+      // console.log(data.data[0].comment);
+      return setGrades(
+        grades.map((grade) => {
+          // grade.studentID === student.studentID
+          //   ? { ...grade, Comment: data.data[0].comment }
+          //   : grade
+          if (grade.studentID === student.studentID) {
+            let editComment = data.data[0].comment;
+            let finalComment = editComment.replace(
+              /{name}/g,
+              student.firstName
+            );
+            return { ...grade, Comment: finalComment };
+          } else {
+            return grade;
+          }
+        })
+      );
+    });
+    // );
+    console.log(grades);
+    // return promise;
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    // console.log(form.current);
-    // const data = new FormData(form.current);
-    // checks the form data
-    // for (var pair of data.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
     fetch(`/report/${classes.classID}`, {
       method: "PATCH",
       headers: {
@@ -49,111 +74,110 @@ const EnglishReport = ({ classes }) => {
       .then((data) => console.log(data));
   };
 
-  // const calculateFinal = (e) => {
-  //   // console.log(e.target.value);
-  //   // console.log(e.target.key);
-  //   setGrades();
-  // };
-
   return (
     <>
-      <Form ref={form} onSubmit={submit}>
-        <Save type="submit" name="Save All"></Save>
-        <Table>
-          <thead>
-            <Row>
-              <TableTitles>Name</TableTitles>
-              {/* Maps through the units array in the class a creates a table title for each unit */}
-              {classes &&
-                classes.units.map((unit) => {
-                  return <TableTitles key={unit}>{unit}</TableTitles>;
-                })}
-              <TableTitles>Final Grade</TableTitles>
-              <TableTitles>Comments</TableTitles>
-            </Row>
-          </thead>
-          <tbody>
-            {grades &&
-              grades.map((c) => {
-                return (
-                  <Row key={c.studentID}>
-                    <Classes>{c.firstName + " " + c.lastName}</Classes>
+      {/* <Form onSubmit={submit}> */}
+      <Save type="submit" name="Save All" onClick={submit} />
+      <GetComments onClick={getComments}> Populate Comments </GetComments>
+      <Table>
+        <thead>
+          <Row>
+            <TableTitles>Name</TableTitles>
+            {/* Maps through the units array in the class a creates a table title for each unit */}
+            {classes &&
+              classes.units.map((unit) => {
+                return <TableTitles key={unit}>{unit}</TableTitles>;
+              })}
+            <TableTitles>Final Grade</TableTitles>
+            <TableTitles>Comments</TableTitles>
+          </Row>
+        </thead>
+        <tbody>
+          {grades &&
+            grades.map((c) => {
+              return (
+                <Row key={c.studentID}>
+                  <Classes>{c.firstName + " " + c.lastName}</Classes>
+                  <Classes>
+                    <Input
+                      id="OralPresentation"
+                      type="text"
+                      defaultValue={c.OralPresentation}
+                      size="4"
+                      onChange={(e) => {
+                        handleOnChange(e, c);
+                      }}
+                    ></Input>
+                  </Classes>
+                  <Classes>
+                    <Input
+                      id="Reading"
+                      type="text"
+                      // name="grades[][Reading]"
+                      defaultValue={c.Reading}
+                      size="4"
+                      onChange={(e) => {
+                        handleOnChange(e, c);
+                      }}
+                    ></Input>
+                  </Classes>
+                  <Classes>
+                    <Input
+                      id="Writing"
+                      type="text"
+                      // name="grades[][Writing]"
+                      defaultValue={c.Writing}
+                      size="4"
+                      onChange={(e) => {
+                        handleOnChange(e, c);
+                      }}
+                    ></Input>
+                  </Classes>
+                  <Classes>
+                    <Input
+                      id="MediaLiteracy"
+                      type="text"
+                      // name="grades[][MediaLiteracy]"
+                      defaultValue={c.MediaLiteracy}
+                      size="4"
+                      onChange={(e) => {
+                        handleOnChange(e, c);
+                      }}
+                    ></Input>
+                  </Classes>
+                  {classes && (
                     <Classes>
                       <Input
-                        id="OralPresentation"
+                        id="FinalGrade"
                         type="text"
-                        defaultValue={c.OralPresentation}
+                        // name="grades[][FinalGrade]"
+                        defaultValue={c.FinalGrade}
                         size="4"
                         onChange={(e) => {
                           handleOnChange(e, c);
                         }}
-                      ></Input>
-                    </Classes>
-                    <Classes>
-                      <Input
-                        id="Reading"
-                        type="text"
-                        // name="grades[][Reading]"
-                        defaultValue={c.Reading}
-                        size="4"
-                        onChange={(e) => {
-                          handleOnChange(e, c);
-                        }}
-                      ></Input>
-                    </Classes>
-                    <Classes>
-                      <Input
-                        id="Writing"
-                        type="text"
-                        // name="grades[][Writing]"
-                        defaultValue={c.Writing}
-                        size="4"
-                        onChange={(e) => {
-                          handleOnChange(e, c);
-                        }}
-                      ></Input>
-                    </Classes>
-                    <Classes>
-                      <Input
-                        id="MediaLiteracy"
-                        type="text"
-                        // name="grades[][MediaLiteracy]"
-                        defaultValue={c.MediaLiteracy}
-                        size="4"
-                        onChange={(e) => {
-                          handleOnChange(e, c);
-                        }}
-                      ></Input>
-                    </Classes>
-                    {classes && (
-                      <Classes>
-                        <Input
-                          id="FinalGrade"
-                          type="text"
-                          // name="grades[][FinalGrade]"
-                          defaultValue={c.FinalGrade}
-                          size="4"
-                          onChange={(e) => {
-                            handleOnChange(e, c);
-                          }}
-                        >
-                          {/* {(c.OralPresentation +
+                      >
+                        {/* {(c.OralPresentation +
                         c.Reading +
                         c.Writing +
                         c.MediaLiteracy) /
                         classes.units.length} */}
-                        </Input>
-                      </Classes>
-                    )}
-                    <Classes>
-                      <Comment rows={10} cols={50}></Comment>
+                      </Input>
                     </Classes>
-                  </Row>
-                );
-              })}
-          </tbody>
-        </Table>
-      </Form>
+                  )}
+                  <Classes>
+                    <Comment
+                      rows={10}
+                      cols={50}
+                      defaultValue={c.Comment ? c.Comment : ""}
+                    ></Comment>
+                  </Classes>
+                </Row>
+              );
+            })}
+        </tbody>
+      </Table>
+      {/* </Form> */}
     </>
   );
 };
@@ -161,6 +185,20 @@ const EnglishReport = ({ classes }) => {
 export default EnglishReport;
 
 const Save = styled.input`
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  &:hover {
+    background-color: var(--accent-color);
+  }
+`;
+
+const GetComments = styled.button`
   background-color: var(--secondary-color);
   border: none;
   border-radius: 5px;
@@ -177,7 +215,6 @@ const Save = styled.input`
 const Form = styled.form``;
 
 const Table = styled.table`
-  /* background-color: pink; */
   font-family: var(--font-body);
   text-align: left;
   width: 90%;
@@ -190,23 +227,23 @@ const Table = styled.table`
 
   tr:nth-child(even) {
     background-color: var(--secondary-color);
+    color: white;
   }
 `;
 
 const Row = styled.tr``;
 
 const TableTitles = styled.th`
-  /* background-color: var(--accent-color); */
   font-family: var(--font-header);
 `;
 
 const Classes = styled.td`
-  /* background-color: pink; */
-  /* display: flex;
-  justify-content: space-evenly;
-  width: 100%; */
+  vertical-align: middle;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  border: none;
+  text-align: center;
+`;
 
 const Comment = styled.textarea``;

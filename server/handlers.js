@@ -125,13 +125,26 @@ const updateReportByClass = async (req, res) => {
 const getReportComment = async (req, res) => {
   const classID = req.params.classID;
   const rank = req.params.rank;
+  let letterRank;
+  if (rank >= 85) {
+    letterRank = "E";
+  } else if (rank >= 75 && rank < 85) {
+    letterRank = "G";
+  } else if (rank >= 65 && rank < 75) {
+    letterRank = "S";
+  } else if (rank < 65) {
+    letterRank = "N";
+  }
+
   try {
     const comment = await ReportComments.where("classID")
       .equals(classID)
       .where("rank")
-      .equals(rank);
+      .equals(letterRank);
     if (comment.length <= 0) {
-      res.status(404).json({ status: 404, message: "Information not found" });
+      res
+        .status(404)
+        .json({ status: 404, message: "Information not found " + letterRank });
     }
     res.status(200).json({ status: 200, data: comment });
   } catch (e) {
