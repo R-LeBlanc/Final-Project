@@ -15,6 +15,14 @@ const SignIn = () => {
     useContext(DashboardContext);
   const navigate = useNavigate();
 
+  // async fetch function for the useEffect
+  const dashboardAndStudents = async () => {
+    const response = await fetch(`/dashboard/${currentUser.email}`);
+    const data = await response.json();
+    await setUserDashboard(data.data[0]);
+    // setDashboardLoading(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,14 +36,6 @@ const SignIn = () => {
       setError("Failed to sign in");
     }
     setLoading(false);
-  };
-
-  // async fetch function for the useEffect
-  const dashboardAndStudents = async () => {
-    const response = await fetch(`/dashboard/${currentUser.email}`);
-    const data = await response.json();
-    await setUserDashboard(data.data[0]);
-    // setDashboardLoading(false);
   };
 
   // once the current user is set, call the dashboard information

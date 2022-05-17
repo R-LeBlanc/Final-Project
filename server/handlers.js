@@ -50,6 +50,25 @@ const getClassNames = async (req, res) => {
     res.status(500).json({ status: 500, message: e.message });
   }
 };
+
+// Will send an announcement object to the database
+const postAnnouncements = async (req, res) => {
+  const post = new Announcements({
+    class: req.body.class,
+    title: req.body.title,
+    message: req.body.message,
+  });
+  console.log(post);
+  await post.save(function (err, result) {
+    if (err) {
+      console.log(err.message);
+      res.status(500).json({ status: 500, message: err.message });
+    }
+    res
+      .status(201)
+      .json({ status: 201, message: "Successfull POST request", data: result });
+  });
+};
 // //  *********************
 
 const getDashBoardInfo = async (req, res) => {
@@ -204,6 +223,7 @@ const getStudents = async (req, res) => {
 module.exports = {
   getAnnouncements,
   getClassNames,
+  postAnnouncements,
   getDashBoardInfo,
   getClassList,
   getClass,

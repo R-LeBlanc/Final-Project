@@ -44,12 +44,26 @@ const EnglishReport = ({ classes }) => {
           //   ? { ...grade, Comment: data.data[0].comment }
           //   : grade
           if (grade.studentID === student.studentID) {
+            const changeGender = (num) => {
+              if (num === 1) {
+                if (student.gender === "M") {
+                  return "he";
+                } else {
+                  return "she";
+                }
+              } else {
+                if (student.gender === "M") {
+                  return "his";
+                } else {
+                  return "her";
+                }
+              }
+            };
             let editComment = data.data[0].comment;
-            let finalComment = editComment.replace(
-              /{name}/g,
-              student.firstName
-            );
-            return { ...grade, Comment: finalComment };
+            let nameEdit = editComment.replace(/{name}/g, student.firstName);
+            let genderEdit1 = nameEdit.replace(/{heshe}/g, changeGender(1));
+            let genderEdit2 = genderEdit1.replace(/{hisher}/g, changeGender(2));
+            return { ...grade, Comment: genderEdit2 };
           } else {
             return grade;
           }

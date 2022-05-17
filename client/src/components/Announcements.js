@@ -1,11 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 
+import { useAuth } from "./AuthContext";
+import { DashboardContext } from "./DashbordComponents/DashboardContext";
+import Post from "./AnnounceComponemts/Post";
+
 const Announcements = () => {
+  const { currentUser } = useAuth();
+  const { userDashboard } = useContext(DashboardContext);
   const [announcements, setAnnouncements] = useState();
   const [loading, setLoading] = useState(true);
   const [classList, setClassList] = useState();
-
+  // console.log(announcements);
   // Pulls a list of class names and the main school announcements from the
   // database
 
@@ -29,7 +35,7 @@ const Announcements = () => {
     fetch(`/announcements/${event.target.id}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         setAnnouncements(data.data);
       });
   };
@@ -68,7 +74,21 @@ const Announcements = () => {
                 );
               })}
           </SideBar>
-          <AnnounceWrapper>{announceArray()}</AnnounceWrapper>
+
+          <AnnounceWrapper>
+            {/* Checks to see if the current use is signed in, then checks their className against the 
+            announcement class. If they match the user will be able to create and delete announcements  */}
+            {currentUser &&
+            userDashboard.className === announcements[0].class ? (
+              <>
+                <h1>{currentUser.displayName}</h1>
+                {/* <Post /> */}
+              </>
+            ) : (
+              ""
+            )}
+            {announceArray()}
+          </AnnounceWrapper>
         </MainWrapper>
       ) : (
         <h2>loading...</h2>

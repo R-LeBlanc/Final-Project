@@ -2,6 +2,7 @@
 const {
   getAnnouncements,
   getClassNames,
+  postAnnouncements,
   getDashBoardInfo,
   getClassList,
   getClass,
@@ -28,6 +29,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/announcements/:id", getAnnouncements);
 // Will get a list of the classes that have announcements
 app.get("/announcements", getClassNames);
+// Posts announcements to database
+app.post("/announcements", postAnnouncements);
 // Will get the users information
 app.get("/dashboard/:id", getDashBoardInfo);
 // Will get a list of the teachers classes from the database
