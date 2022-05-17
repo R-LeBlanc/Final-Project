@@ -2,23 +2,48 @@ import styled from "styled-components";
 import React, { useContext, useEffect, useState } from "react";
 
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
+import { ReportContext } from "./ReportCardComponents/ReportContext";
 import SideMenu from "./DashbordComponents/SideMenu";
+import ScienceReport from "./ReportCardComponents/ScienceReport";
+import EnglishReport from "./ReportCardComponents/EnglishReport";
+import MathReport from "./ReportCardComponents/MathReport";
 
 const MyReportCards = () => {
   const { userDashboard, usersStudents } = useContext(DashboardContext);
+  const { grades, setGrades, allClasses } = useContext(ReportContext);
   const [classes, setClasses] = useState();
-  // console.log(userDashboard);
+  const [selectedClass, setSelectedClass] = useState();
+  // console.log("", usersStudents);
 
-  const getClasses = async () => {
-    const response = await fetch(`/classlist/${userDashboard.id}`);
+  // const getClasses = async () => {
+  //   const response = await fetch(`/classlist/${userDashboard.id}`);
+  //   const data = await response.json();
+  //   // console.log(data.data);
+  //   setClasses(data.data);
+  // };
+
+  const handleOnClick = async (event) => {
+    // console.log(event.target.value);
+    const res = await fetch(
+      `/classlist/${userDashboard.id}/${event.target.value}`
+    );
+    const data1 = await res.json();
+    // console.log(data1.data[0]);
+    setClasses(data1.data[0]);
+    // TODO: Maybe fetch all the grades for the class at once?
+    // Also fetch them in the dashboard home so that i can access
+    // them on other pages too
+    const response = await fetch(`/report/${event.target.value}`);
     const data = await response.json();
-    // console.log(data.data);
-    setClasses(data.data);
+    setGrades(data.data);
   };
 
-  useEffect(() => {
-    getClasses();
-  }, []);
+  // TODO: create a function that will calculate the final grade everytime
+  // a grade is changed
+  const calculateFinal = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.key);
+  };
 
   return (
     <Wrapper>
@@ -26,42 +51,37 @@ const MyReportCards = () => {
       <SecondaryWrap>
         <Title>My Report Cards</Title>
         <ClassesWrap>
-          <ClassesWrap2>
-            <Buttons>
-              <View for="classSelect">Select a class:</View>
-              <Select id="classSelect">
-                {classes &&
-                  classes.map((c) => {
-                    return <Option>{c.classID}</Option>;
-                  })}
-              </Select>
-            </Buttons>
-            <Table>
-              <Row>
-                <TableTitles>Name</TableTitles>
-                <TableTitles>Grade</TableTitles>
-                <TableTitles>Teacher(s)</TableTitles>
-                <TableTitles>Average</TableTitles>
-                <TableTitles>Median</TableTitles>
-              </Row>
-              {!usersStudents ? (
-                <h1>Loading</h1>
-              ) : (
-                usersStudents.map((student) => {
-                  return (
-                    <Row>
-                      <Classes>{student.name}</Classes>
-                      <Classes>5</Classes>
-                      <Classes>{userDashboard.name}</Classes>
-                      {/* TEMP DATA */}
-                      <Classes>78</Classes>
-                      <Classes>70</Classes>
-                    </Row>
-                  );
-                })
-              )}
-            </Table>
-          </ClassesWrap2>
+          {/* <ClassesWrap2> */}
+          <Buttons>
+            <View>Select a class:</View>
+            <Select
+              id="classSelect"
+              name="classSelect"
+              onChange={(event) => {
+                handleOnClick(event);
+              }}
+            >
+              {userDashboard &&
+                userDashboard.classes.map((c) => {
+                  return <Option key={c}>{c}</Option>;
+                })}
+            </Select>
+          </Buttons>
+          {classes && classes.classID === "SCI_GR5" ? (
+            <ScienceReport classes={classes} />
+          ) : (
+            ""
+          )}
+          {classes && classes.classID === "ENG_GR5" ? (
+            <EnglishReport classes={classes} />
+          ) : (
+            ""
+          )}
+          {classes && classes.classID === "MA_GR5" ? (
+            <MathReport classes={classes} />
+          ) : (
+            ""
+          )}
         </ClassesWrap>
       </SecondaryWrap>
     </Wrapper>
@@ -94,7 +114,7 @@ const ClassesWrap = styled.div`
   /* color: white; */
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
   height: 100%;
 `;
@@ -102,7 +122,7 @@ const ClassesWrap = styled.div`
 const ClassesWrap2 = styled.div`
   background-color: var(--primary-color);
   border-radius: 15px;
-  color: white;
+  /* color: white; */
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -124,47 +144,16 @@ const View = styled.label`
   font-size: 1.5rem;
   padding: 5px 10px;
   margin-left: 7px;
-
-  &:hover {
-    color: white;
-    background-color: var(--accent-color);
-    cursor: pointer;
-  }
 `;
 
 const Select = styled.select`
   border-radius: 5px;
+
+  &:hover {
+    /* color: white;
+    background-color: var(--accent-color); */
+    cursor: pointer;
+  }
 `;
 
 const Option = styled.option``;
-
-const Table = styled.table`
-  /* background-color: pink; */
-  font-family: var(--font-body);
-  text-align: left;
-  width: 90%;
-
-  th,
-  td {
-    border: 1px solid var(--accent-color);
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: var(--secondary-color);
-  }
-`;
-
-const Row = styled.tr``;
-
-const TableTitles = styled.th`
-  /* background-color: var(--accent-color); */
-  font-family: var(--font-header);
-`;
-
-const Classes = styled.td`
-  /* background-color: pink; */
-  /* display: flex;
-  justify-content: space-evenly;
-  width: 100%; */
-`;

@@ -6,6 +6,7 @@ import { auth } from "../firebase";
 import { Doughnut } from "react-chartjs-2";
 import { useAuth } from "./AuthContext";
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
+import { ReportContext } from "./ReportCardComponents/ReportContext";
 
 import SideMenu from "./DashbordComponents/SideMenu";
 import StudentPreview from "./DashbordComponents/StudentPreview";
@@ -15,52 +16,91 @@ import { data } from "./DashbordComponents/ChartView";
 const Dashboard = () => {
   // TODO: Update profile so I can use the profile information
   const { signIn, currentUser } = useAuth();
+  const { grades, setGrades, allClasses, setAllClasses } =
+    useContext(ReportContext);
   const { userDashboard, setUserDashboard, usersStudents, setUsersStudents } =
     useContext(DashboardContext);
   const [dashboardLoading, setDashboardLoading] = useState(true);
-
+  // console.log("", userDashboard);
   // async fetch functions***************
   // Gets the teacher's dashboard info from the data base
   const dashboardAndStudents = async () => {
     const response = await fetch(`/dashboard/${currentUser.email}`);
     const data = await response.json();
-    setUserDashboard(data.data[0]);
+    await setUserDashboard(data.data[0]);
+    setDashboardLoading(false);
+    // const studentArray = [];
+    // await userDashboard.students.map(async (student) => {
+    //   const response = await fetch(`/students/${student}`);
+    //   const data = await response.json();
+    //   studentArray.push(data.data[0]);
+    // });
+    // setUsersStudents(studentArray);
+    // const classesArray = [];
+    // await userDashboard.classes.map(async (c) => {
+    //   const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
+    //   const data = await response.json();
+    //   console.log(data);
+    //   classesArray.push(data.data);
+    // });
+    // setAllClasses(classesArray);
+    // return data.data[0];
   };
+
+  const getAllClasses = async () => {
+    const classesArray = [];
+    await userDashboard.classes.map(async (c) => {
+      const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
+      const data = await response.json();
+      // console.log(data.data);
+      classesArray.push(data.data);
+    });
+    setAllClasses(classesArray);
+  };
+
   // gets the teacher's students based of the id's retrieved in the teacher dashboard
   const getStudents = async () => {
     const studentArray = [];
     userDashboard.students.map(async (student) => {
       const response = await fetch(`/students/${student}`);
       const data = await response.json();
+      // console.log(data.data);
       studentArray.push(data.data[0]);
     });
+    //   Promise.all(promises).then((data) => {
+    //     console.log(data);
+    //   });
+    // console.log(studentArray);
     setUsersStudents(studentArray);
     // console.log(usersStudents);
   };
   // *************************************
 
-  useEffect(() => {
-    // can try moving this to the sign in page?
-    dashboardAndStudents();
+  // useEffect(() => {
+  //   const asyncFunction = async () => {
+  //     let result1 = await dashboardAndStudents();
+  //     getStudents(result1);
+  //     // if (userDashboard) {
+  //     // }
+  //     //   getStudents();
+  //     setDashboardLoading(false);
+  //   };
+  //   // await dashboardAndStudents();
+  //   asyncFunction();
+  // }, []);
 
+  // useEffect(() => {
+  //   dashboardAndStudents();
+  // }, []);
+
+  useEffect(() => {
     // if (userDashboard) {
-    // }
-    //   getStudents();
-    // setDashboardLoading(false);
-  }, []);
-
-  useEffect(() => {
+    getAllClasses();
     getStudents();
     setDashboardLoading(false);
+    // }
   }, [userDashboard]);
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     console.log(user.email, user.displayName);
-  //   } else {
-  //     console.log("no user");
-  //   }
-  // });
-  // console.log(userDashboard);
+
   return (
     <Wrapper>
       <SideMenu />
@@ -76,7 +116,8 @@ const Dashboard = () => {
           {!dashboardLoading && (
             // Preview components for dashboard
             <ComponentWrapper>
-              <StudentPreview />
+              {usersStudents && <StudentPreview />}
+
               <LeftSide>
                 <ChartWrap>
                   <h2>Class Average's</h2>
@@ -133,6 +174,37 @@ const LeftSide = styled.div`
   /* align-items: center; */
   height: 70%;
 `;
+
+const Container = styled.div``;
+
+const StudentWrap = styled.div`
+  /* background-color: var(--secondary-color); */
+  background-image: linear-gradient(
+    to bottom right,
+    var(--secondary-color),
+    var(--primary-color)
+  );
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin: 10px 0;
+`;
+
+const Image = styled.div`
+  background-color: white;
+  border-radius: 100%;
+  color: var(--accent-color);
+  width: 20px;
+  height: 20px;
+  text-align: center;
+`;
+
+const Name = styled.p`
+  /* padding-right: 20px; */
+`;
+
+const StudentId = styled.h3``;
 
 const ChartWrap = styled.div`
   /* background-color: lightblue; */

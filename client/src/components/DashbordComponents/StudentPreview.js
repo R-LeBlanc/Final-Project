@@ -6,13 +6,14 @@ import { DashboardContext } from "./DashboardContext";
 
 const StudentPreview = () => {
   const { usersStudents } = useContext(DashboardContext);
-  console.log(usersStudents);
+  console.log("", usersStudents);
   return (
     <Wrapper>
       <SecondaryWrap>
         <Title>Students</Title>
         <Container>
-          {usersStudents &&
+          {
+            // usersStudents &&
             usersStudents.map((student) => {
               console.log("here");
               return (
@@ -22,7 +23,8 @@ const StudentPreview = () => {
                   <StudentId>ID {student.id}</StudentId>
                 </StudentWrap>
               );
-            })}
+            })
+          }
         </Container>
       </SecondaryWrap>
     </Wrapper>

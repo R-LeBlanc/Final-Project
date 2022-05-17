@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ScienceReportSchema = new mongoose.Schema({
+const EnglishReportSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -13,12 +13,12 @@ const ScienceReportSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  EarthAndSpace: Number,
-  LifeSystems: Number,
-  MatterAndEnergy: Number,
-  StructuresAndMechanisms: Number,
+  OralPresentation: Number,
+  Reading: Number,
+  Writing: Number,
+  MediaLiteracy: Number,
   FinalGrade: Number,
   Comment: String,
 });
 
-module.exports = mongoose.model("SCI_GR5", ScienceReportSchema);
+module.exports = mongoose.model("ENG_GR5", EnglishReportSchema);

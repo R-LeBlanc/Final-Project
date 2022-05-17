@@ -14,6 +14,7 @@ import UpdateProfile from "./UpdateProfile";
 import MyClasses from "./MyClasses";
 import MyReportCards from "./MyReportCards";
 import MyStudents from "./MyStudents";
+import Post from "./AnnounceComponemts/Post";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/signin" element={<SignIn />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/announcements" element={<Announcements />}></Route>
+        <Route path="/post" element={<Post />}></Route>
         <Route path="/students/:id" element={"Student profile page"}></Route>
         <Route path="/myclasses" element={<MyClasses />}></Route>
         <Route path="/myreports" element={<MyReportCards />}></Route>

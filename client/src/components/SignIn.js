@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+
+import { DashboardContext } from "./DashbordComponents/DashboardContext";
 
 const SignIn = () => {
   const { signIn, currentUser } = useAuth();
@@ -9,7 +11,17 @@ const SignIn = () => {
   const passwordRef = useRef();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const { userDashboard, setUserDashboard, usersStudents, setUsersStudents } =
+    useContext(DashboardContext);
   const navigate = useNavigate();
+
+  // async fetch function for the useEffect
+  const dashboardAndStudents = async () => {
+    const response = await fetch(`/dashboard/${currentUser.email}`);
+    const data = await response.json();
+    await setUserDashboard(data.data[0]);
+    // setDashboardLoading(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,17 +30,25 @@ const SignIn = () => {
       setError("");
       setLoading(true);
       await signIn(emailRef.current.value, passwordRef.current.value);
+      await dashboardAndStudents();
       navigate("/dashboard");
     } catch {
       setError("Failed to sign in");
     }
     setLoading(false);
   };
+
+  // once the current user is set, call the dashboard information
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     dashboardAndStudents();
+  //   }
+  // }, [currentUser]);
+
   return (
     <>
       <Wrapper>
         <h1>Sign In</h1>
-        {currentUser && <p>{currentUser.displayName}</p>}
         {error && <h1>{error}</h1>}
         {/* <form onSubmit={handleSubmit}> */}
         <label>Email</label>

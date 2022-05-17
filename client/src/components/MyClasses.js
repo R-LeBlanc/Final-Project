@@ -12,7 +12,7 @@ const MyClasses = () => {
   const getClasses = async () => {
     const response = await fetch(`/classlist/${userDashboard.id}`);
     const data = await response.json();
-    // console.log(data.data);
+    console.log(data.data);
     setClasses(data.data);
   };
 
@@ -45,7 +45,7 @@ const MyClasses = () => {
               ) : (
                 classes.map((c) => {
                   return (
-                    <Row>
+                    <Row key={c.classID}>
                       <Classes>{c.name}</Classes>
                       <Classes>{c.classID}</Classes>
                       <Classes>5</Classes>

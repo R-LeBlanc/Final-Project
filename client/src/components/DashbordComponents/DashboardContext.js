@@ -25,7 +25,7 @@ export const DashboardContext = React.createContext();
 
 export const DashboardProvider = ({ children }) => {
   const [userDashboard, setUserDashboard] = useState();
-  const [usersStudents, setUsersStudents] = useState();
+  const [usersStudents, setUsersStudents] = useState(null);
   //   const value = {
   //     userDashboard,
   //     setUserDashboard,
