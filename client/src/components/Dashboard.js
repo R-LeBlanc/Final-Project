@@ -49,7 +49,7 @@ const Dashboard = () => {
 
   const getAllClasses = async () => {
     const classesArray = [];
-    await userDashboard.classes.map(async (c) => {
+    userDashboard.classes.map(async (c) => {
       const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
       const data = await response.json();
       // console.log(data.data);
