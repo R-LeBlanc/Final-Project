@@ -5,6 +5,9 @@ require("dotenv").config();
 const { MongoClient, MongoUnexpectedServerResponseError } = require("mongodb");
 const { MONGO_URI } = process.env;
 
+// use this package to generate unique ids: https://www.npmjs.com/package/uuid
+const { v4: uuidv4 } = require("uuid");
+
 const mongoose = require("mongoose");
 const User = require("./Schemas/User");
 const Announcements = require("./Schemas/Announcements");
@@ -53,12 +56,14 @@ const getClassNames = async (req, res) => {
 
 // Will send an announcement object to the database
 const postAnnouncements = async (req, res) => {
+  let id = uuidv4();
   const post = new Announcements({
+    _id: id,
     class: req.body.class,
     title: req.body.title,
     message: req.body.message,
   });
-  console.log(post);
+  // console.log(post);
   await post.save(function (err, result) {
     if (err) {
       console.log(err.message);
@@ -69,6 +74,17 @@ const postAnnouncements = async (req, res) => {
       .json({ status: 201, message: "Successfull POST request", data: result });
   });
 };
+
+const deleteAnnouncement = async (req, res) => {
+  try {
+    await Announcements.deleteOne({ _id: req.params.id });
+    res.status(201).json({ status: 201, message: "Announcement deleted" });
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ status: 500, message: e.message });
+  }
+};
+
 // //  *********************
 
 const getDashBoardInfo = async (req, res) => {
@@ -224,11 +240,11 @@ module.exports = {
   getAnnouncements,
   getClassNames,
   postAnnouncements,
+  deleteAnnouncement,
   getDashBoardInfo,
   getClassList,
   getClass,
   getReportComment,
-  // getSubjects,
   getReportByClass,
   updateReportByClass,
   getStudents,

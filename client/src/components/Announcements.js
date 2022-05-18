@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "./AuthContext";
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
 import Post from "./AnnounceComponemts/Post";
 
 const Announcements = () => {
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { userDashboard } = useContext(DashboardContext);
   const [announcements, setAnnouncements] = useState();
@@ -14,7 +16,7 @@ const Announcements = () => {
   // console.log(announcements);
   // Pulls a list of class names and the main school announcements from the
   // database
-
+  // console.log(announcements);
   useEffect(() => {
     fetch("/announcements")
       .then((res) => res.json())
@@ -40,10 +42,34 @@ const Announcements = () => {
       });
   };
 
+  const deleteAnnouncement = async (id) => {
+    const response = await fetch(`/announcements/${id}`, { method: "DELETE" });
+    const data = await response.json();
+    console.log(data);
+    // Filter through the announcement array and returns the objects that
+    // do not match the id of the selected item
+    setAnnouncements((announcements) =>
+      announcements.filter((i) => i._id !== id)
+    );
+  };
+
   const announceArray = () => {
     return announcements.map((announcement) => {
       return (
         <Wrapper key={announcement.title}>
+          {currentUser && userDashboard.className === announcements[0].class ? (
+            <>
+              <Delete
+                onClick={() => {
+                  deleteAnnouncement(announcement._id);
+                }}
+              >
+                Delete
+              </Delete>
+            </>
+          ) : (
+            ""
+          )}
           <Title>{announcement.title}</Title>
           <Message>{announcement.message}</Message>
         </Wrapper>
@@ -102,6 +128,8 @@ export default Announcements;
 const Wrapper = styled.div``;
 
 const Title = styled.h2``;
+
+const Delete = styled.button``;
 
 const Message = styled.div`
   font-family: var(--font-body);
