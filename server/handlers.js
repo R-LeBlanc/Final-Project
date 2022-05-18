@@ -63,7 +63,7 @@ const postAnnouncements = async (req, res) => {
     title: req.body.title,
     message: req.body.message,
   });
-  // console.log(post);
+
   await post.save(function (err, result) {
     if (err) {
       console.log(err.message);
