@@ -21,14 +21,15 @@ const Dashboard = () => {
   const { userDashboard, setUserDashboard, usersStudents, setUsersStudents } =
     useContext(DashboardContext);
   const [dashboardLoading, setDashboardLoading] = useState(true);
-  // console.log("", userDashboard);
+  // console.log("", selectedReport);
+
   // async fetch functions***************
   // Gets the teacher's dashboard info from the data base
   const dashboardAndStudents = async () => {
     const response = await fetch(`/dashboard/${currentUser.email}`);
     const data = await response.json();
     await setUserDashboard(data.data[0]);
-    setDashboardLoading(false);
+    // setDashboardLoading(false);
     // const studentArray = [];
     // await userDashboard.students.map(async (student) => {
     //   const response = await fetch(`/students/${student}`);
@@ -53,7 +54,7 @@ const Dashboard = () => {
       const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
       const data = await response.json();
       // console.log(data.data);
-      classesArray.push(data.data);
+      classesArray.push(data.data[0]);
     });
     setAllClasses(classesArray);
   };
@@ -94,12 +95,18 @@ const Dashboard = () => {
   // }, []);
 
   useEffect(() => {
-    // if (userDashboard) {
-    getAllClasses();
-    getStudents();
-    setDashboardLoading(false);
-    // }
+    dashboardAndStudents();
+  }, []);
+
+  useEffect(() => {
+    if (userDashboard) {
+      getAllClasses();
+      getStudents();
+      setDashboardLoading(false);
+    }
   }, [userDashboard]);
+
+  // console.log(allClasses);
 
   return (
     <Wrapper>
@@ -116,7 +123,7 @@ const Dashboard = () => {
           {!dashboardLoading && (
             // Preview components for dashboard
             <ComponentWrapper>
-              {usersStudents && <StudentPreview />}
+              <StudentPreview />
 
               <LeftSide>
                 <ChartWrap>

@@ -13,10 +13,9 @@ const Announcements = () => {
   const [announcements, setAnnouncements] = useState();
   const [loading, setLoading] = useState(true);
   const [classList, setClassList] = useState();
-  // console.log(announcements);
+
   // Pulls a list of class names and the main school announcements from the
   // database
-  // console.log(announcements);
   useEffect(() => {
     fetch("/announcements")
       .then((res) => res.json())

@@ -1,30 +1,42 @@
 import styled from "styled-components";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { DashboardContext } from "./DashboardContext";
 
 const StudentPreview = () => {
   const { usersStudents } = useContext(DashboardContext);
-  console.log("", usersStudents);
+  // console.log("", usersStudents);
+
+  const studentArr = () => {
+    usersStudents.map((student) => {
+      console.log("here");
+      return (
+        <StudentWrap key={student.id}>
+          <Image>S</Image>
+          <Name>{student.name}</Name>
+          <StudentId>ID {student.id}</StudentId>
+        </StudentWrap>
+      );
+    });
+  };
+
   return (
     <Wrapper>
       <SecondaryWrap>
         <Title>Students</Title>
         <Container>
-          {
-            // usersStudents &&
-            usersStudents.map((student) => {
-              console.log("here");
-              return (
-                <StudentWrap key={student.id}>
-                  <Image>S</Image>
-                  <Name>{student.name}</Name>
-                  <StudentId>ID {student.id}</StudentId>
-                </StudentWrap>
-              );
-            })
-          }
+          {studentArr()}
+          {/* {usersStudents.map((student) => {
+            console.log("here");
+            return (
+              <StudentWrap key={student.id}>
+                <Image>S</Image>
+                <Name>{student.name}</Name>
+                <StudentId>ID {student.id}</StudentId>
+              </StudentWrap>
+            );
+          })} */}
         </Container>
       </SecondaryWrap>
     </Wrapper>

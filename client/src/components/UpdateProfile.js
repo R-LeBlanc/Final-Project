@@ -82,7 +82,7 @@ const UpdateProfile = () => {
         <button type="submit" disabled={loading} onClick={handleSubmit}>
           Update
         </button>
-        <Link to="/dashboard">Cancle</Link>
+        <Link to="/dashboard">Cancel</Link>
         {/* </form> */}
       </Wrapper>
     </>

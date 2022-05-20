@@ -40,10 +40,6 @@ const MyReportCards = () => {
 
   // TODO: create a function that will calculate the final grade everytime
   // a grade is changed
-  const calculateFinal = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.key);
-  };
 
   return (
     <Wrapper>
@@ -99,7 +95,7 @@ const SecondaryWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 const Title = styled.div`

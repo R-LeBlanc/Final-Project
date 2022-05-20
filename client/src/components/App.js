@@ -15,6 +15,7 @@ import MyClasses from "./MyClasses";
 import MyReportCards from "./MyReportCards";
 import MyStudents from "./MyStudents";
 import Post from "./AnnounceComponemts/Post";
+import Modal from "./DashbordComponents/Modal";
 
 const App = () => {
   return (

@@ -2,10 +2,13 @@ import styled from "styled-components";
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { DashboardContext } from "./DashboardContext";
+import { ReportContext } from "../ReportCardComponents/ReportContext";
 
 const ClassesPreview = () => {
   const { userDashboard } = useContext(DashboardContext);
-  // console.log(userDashboard);
+  const { grades, setGrades, allClasses, setAllClasses } =
+    useContext(ReportContext);
+  // console.log(allClasses);
   return (
     <Wrapper>
       <h2>Classes:</h2>

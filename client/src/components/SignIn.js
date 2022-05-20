@@ -16,12 +16,12 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   // async fetch function for the useEffect
-  const dashboardAndStudents = async () => {
-    const response = await fetch(`/dashboard/${currentUser.email}`);
-    const data = await response.json();
-    await setUserDashboard(data.data[0]);
-    // setDashboardLoading(false);
-  };
+  // const dashboardAndStudents = async () => {
+  //   const response = await fetch(`/dashboard/${currentUser.email}`);
+  //   const data = await response.json();
+  //   await setUserDashboard(data.data[0]);
+  //   // setDashboardLoading(false);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const SignIn = () => {
       setError("");
       setLoading(true);
       await signIn(emailRef.current.value, passwordRef.current.value);
-      await dashboardAndStudents();
+      // await dashboardAndStudents();
       navigate("/dashboard");
     } catch {
       setError("Failed to sign in");
