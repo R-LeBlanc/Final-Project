@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updatePassword = (password) => {
-    return currentUser.updatePasword(password);
+    return currentUser.updatePassword(password);
   };
 
   useEffect(() => {

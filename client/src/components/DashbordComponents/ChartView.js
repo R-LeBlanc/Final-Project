@@ -12,7 +12,7 @@ export const data = {
       backgroundColor: [
         "rgb(255, 46, 99)",
         "rgb(238, 238, 238)",
-        "rgb(255, 87, 34)",
+        "rgb(255, 164, 84)",
         "rgb(0, 173, 181)",
         "rgb(48, 56, 65)",
       ],

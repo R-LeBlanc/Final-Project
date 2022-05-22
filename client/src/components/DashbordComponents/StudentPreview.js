@@ -1,19 +1,16 @@
 import styled from "styled-components";
 import React, { useState, useContext, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { DashboardContext } from "./DashboardContext";
 
 const StudentPreview = () => {
   const { usersStudents } = useContext(DashboardContext);
-  // console.log("", usersStudents);
 
   const studentArr = () => {
-    usersStudents.map((student) => {
-      console.log("here");
+    return usersStudents.map((student) => {
       return (
         <StudentWrap key={student.id}>
-          <Image>S</Image>
+          <Image src="/images/superhero3.png" />
           <Name>{student.name}</Name>
           <StudentId>ID {student.id}</StudentId>
         </StudentWrap>
@@ -25,19 +22,7 @@ const StudentPreview = () => {
     <Wrapper>
       <SecondaryWrap>
         <Title>Students</Title>
-        <Container>
-          {studentArr()}
-          {/* {usersStudents.map((student) => {
-            console.log("here");
-            return (
-              <StudentWrap key={student.id}>
-                <Image>S</Image>
-                <Name>{student.name}</Name>
-                <StudentId>ID {student.id}</StudentId>
-              </StudentWrap>
-            );
-          })} */}
-        </Container>
+        <Container>{usersStudents && studentArr()}</Container>
       </SecondaryWrap>
     </Wrapper>
   );
@@ -51,19 +36,13 @@ const Wrapper = styled.div`
   border-radius: 15px;
   color: white;
   display: flex;
-  /* flex-direction: column; */
-  /* padding: 30px 20px; */
   width: 40vw;
   height: 70%;
-
-  /* overflow: scroll; */
 `;
 
 const SecondaryWrap = styled.div`
-  /* background-color: pink; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 30px 20px;
   height: 85%;
   width: 100%;
@@ -71,33 +50,29 @@ const SecondaryWrap = styled.div`
 
 const Container = styled.div``;
 
-const Title = styled.h2``;
+const Title = styled.h2`
+  padding-bottom: 50px;
+`;
 
 const StudentWrap = styled.div`
-  /* background-color: var(--secondary-color); */
-  background-image: linear-gradient(
+  background-color: var(--secondary-color);
+  /* background-image: linear-gradient(
     to bottom right,
     var(--secondary-color),
-    var(--primary-color)
-  );
+    rgb(255, 195, 130)
+  ); */
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
   margin: 10px 0;
+  align-items: center;
 `;
 
-const Image = styled.div`
-  background-color: white;
-  border-radius: 100%;
-  color: var(--accent-color);
-  width: 20px;
-  height: 20px;
-  text-align: center;
+const Image = styled.img`
+  height: 50px;
 `;
 
-const Name = styled.p`
-  /* padding-right: 20px; */
-`;
+const Name = styled.p``;
 
 const StudentId = styled.h3``;

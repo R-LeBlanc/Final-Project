@@ -65,7 +65,6 @@ const EnglishReport = ({ classes }) => {
   // const [refetch, setRefetch] = useState(false);
 
   const getComments = async () => {
-    // const promise = await Promise.all(
     try {
       grades.forEach(async (student) => {
         const response = await fetch(
@@ -79,30 +78,17 @@ const EnglishReport = ({ classes }) => {
         const index = grades.findIndex(
           (x) => x.studentID === student.studentID
         );
-        // setGrades((grades[index].Comment = comment));
-        // grades[index].Comment = comment;
+
         document.getElementById(`comment-${index}`).innerHTML = comment;
         setGrades((prev) => {
-          // console.log(prev);
           prev[index].Comment = comment;
           return prev;
         });
-        // console.log(grades);
-        // setGrades(grades);
-
-        // return (grades[index].Comment = comment);
       });
     } catch (e) {
       console.log(e);
     }
-
-    // setRefetch(!refetch);
   };
-  // console.log(refetch);
-  // useEffect(() => {
-  //   console.log(grades);
-  //   // setGrades(grades);
-  // }, [grades]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -194,22 +180,43 @@ const EnglishReport = ({ classes }) => {
                     </Classes>
                     {classes && (
                       <Classes>
-                        <Input
-                          id="FinalGrade"
-                          type="text"
-                          // name="grades[][FinalGrade]"
-                          defaultValue={c.FinalGrade}
-                          size="4"
-                          onChange={(e) => {
-                            handleOnChange(e, c);
-                          }}
-                        >
-                          {/* {(c.OralPresentation +
-                        c.Reading +
-                        c.Writing +
-                        c.MediaLiteracy) /
-                        classes.units.length} */}
-                        </Input>
+                        {
+                          c.FinalGrade ? (
+                            <Input
+                              id="FinalGrade"
+                              type="text"
+                              // name="grades[][FinalGrade]"
+                              defaultValue={c.FinalGrade}
+                              size="4"
+                              onChange={(e) => {
+                                handleOnChange(e, c);
+                              }}
+                            ></Input>
+                          ) : (
+                            <Input
+                              id="FinalGrade"
+                              type="text"
+                              // name="grades[][FinalGrade]"
+                              defaultValue={
+                                (c.OralPresentation +
+                                  c.Reading +
+                                  c.Writing +
+                                  c.MediaLiteracy) /
+                                classes.units.length
+                              }
+                              size="4"
+                              onChange={(e) => {
+                                handleOnChange(e, c);
+                              }}
+                            ></Input>
+                          )
+                          //   (c.OralPresentation +
+                          //     c.Reading +
+                          //     c.Writing +
+                          //     c.MediaLiteracy) /
+                          //   classes.units.length
+                          // )
+                        }
                       </Classes>
                     )}
                     <Classes>

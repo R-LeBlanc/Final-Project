@@ -15,13 +15,6 @@ const MyReportCards = () => {
   const [selectedClass, setSelectedClass] = useState();
   // console.log("", usersStudents);
 
-  // const getClasses = async () => {
-  //   const response = await fetch(`/classlist/${userDashboard.id}`);
-  //   const data = await response.json();
-  //   // console.log(data.data);
-  //   setClasses(data.data);
-  // };
-
   const handleOnClick = async (event) => {
     // console.log(event.target.value);
     const res = await fetch(

@@ -8,17 +8,23 @@ const ClassesPreview = () => {
   const { userDashboard } = useContext(DashboardContext);
   const { grades, setGrades, allClasses, setAllClasses } =
     useContext(ReportContext);
-  // console.log(allClasses);
+  // console.log(userDashboard);
+  const classesArr = () => {
+    return allClasses.map((c) => {
+      return (
+        <ClassesWrap key={c.classID}>
+          {/* <Image src="/images/superhero3.png" /> */}
+          <p>{c.name}</p>
+          <h3>{c.classID}</h3>
+        </ClassesWrap>
+      );
+    });
+  };
+
   return (
     <Wrapper>
       <h2>Classes:</h2>
-      {!userDashboard ? (
-        <h1>Loading</h1>
-      ) : (
-        userDashboard.classes.map((c) => {
-          return <p key={c}>{c}</p>;
-        })
-      )}
+      {allClasses && classesArr()}
     </Wrapper>
   );
 };
@@ -38,4 +44,11 @@ const Wrapper = styled.div`
   max-height: 350px;
   /* max-height: 50px; */
   /* overflow: scroll; */
+`;
+
+const ClassesWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  align-items: center;
 `;

@@ -5,23 +5,10 @@ import { ReportContext } from "../ReportCardComponents/ReportContext";
 import EnglishTable from "./TableComponents/EnglishTable";
 import MathTable from "./TableComponents/MathTable";
 import ScienceTable from "./TableComponents/ScienceTable";
-import SideMenu from "./SideMenu";
 
 const Modal = ({ setIsOpen }) => {
   const { allClasses, selectedReport, setSelectedReport } =
     useContext(ReportContext);
-  //   console.log(selectedReport);
-  //   console.log(typeof selectedReport);
-  //   console.log(selectedReport[0]);
-  //   const func = () => {
-  //     console.log("here");
-  //     return selectedReport.map((report) => {
-  //       console.log(report);
-  //       return report;
-  //     });
-  //   };
-
-  //   func();
 
   return (
     <>
@@ -46,6 +33,7 @@ const Modal = ({ setIsOpen }) => {
             </HeaderWrap>
             <Content>
               <TableWrap>
+                {/* <Table> */}
                 <EnglishTable selectedReport={selectedReport} />
               </TableWrap>
               <TableWrap>
@@ -53,6 +41,7 @@ const Modal = ({ setIsOpen }) => {
               </TableWrap>
               <TableWrap>
                 <ScienceTable selectedReport={selectedReport} />
+                {/* </Table> */}
               </TableWrap>
             </Content>
           </Main>
@@ -138,4 +127,23 @@ const Content = styled.div`
 
 const TableWrap = styled.div`
   padding-bottom: 50px;
+`;
+
+const Table = styled.table`
+  font-family: var(--font-body);
+  text-align: left;
+  table-layout: fixed;
+  width: 100%;
+
+  th,
+  td {
+    /* border: 1px solid var(--accent-color); */
+    padding: 20px 0;
+  }
+  th {
+    &:last-child {
+      /* background-color: pink; */
+      width: 200px;
+    }
+  }
 `;
