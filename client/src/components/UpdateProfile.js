@@ -49,41 +49,53 @@ const UpdateProfile = () => {
   return (
     <>
       <Wrapper>
-        <h1>Update Profile</h1>
-        {/* {currentUser && currentUser.email} */}
-        {error && <h1>{error}</h1>}
-        {/* <form onSubmit={handleSubmit}> */}
-        <label>Full Name</label>
-        <input
-          type="text"
-          ref={nameRef}
-          required
-          defaultValue={currentUser.displayName}
-        />
-        <label>Email</label>
-        <input
-          type="email"
-          ref={emailRef}
-          required
-          defaultValue={currentUser.email}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          ref={passwordRef}
-          placeholder="Leave blank to keep current password"
-        />
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          ref={passwordConfirmRef}
-          placeholder="Leave blank to keep current password"
-        />
-        <button type="submit" disabled={loading} onClick={handleSubmit}>
-          Update
-        </button>
-        <Link to="/dashboard">Cancel</Link>
-        {/* </form> */}
+        <Main>
+          <Blur>
+            <h1>Update Profile</h1>
+            {/* {currentUser && currentUser.email} */}
+            {error && <h1>{error}</h1>}
+            {/* <form onSubmit={handleSubmit}> */}
+            <Wrap>
+              <label>Full Name</label>
+              <Input
+                type="text"
+                ref={nameRef}
+                required
+                defaultValue={currentUser.displayName}
+              />
+            </Wrap>
+            <Wrap>
+              <label>Email</label>
+              <Input
+                type="email"
+                ref={emailRef}
+                required
+                defaultValue={currentUser.email}
+              />
+            </Wrap>
+            <Wrap>
+              <label>Password</label>
+              <Input
+                type="password"
+                ref={passwordRef}
+                placeholder="Leave blank to keep current password"
+              />
+            </Wrap>
+            <Wrap>
+              <label>Confirm Password</label>
+              <Input
+                type="password"
+                ref={passwordConfirmRef}
+                placeholder="Leave blank to keep current password"
+              />
+            </Wrap>
+            <Button type="submit" disabled={loading} onClick={handleSubmit}>
+              Update
+            </Button>
+            <Link to="/dashboard">Cancel</Link>
+            {/* </form> */}
+          </Blur>
+        </Main>
       </Wrapper>
     </>
   );
@@ -96,5 +108,61 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
+`;
+
+const Main = styled.div`
+  background-image: url("/images/erik-skof-2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 30vw;
+`;
+
+const Blur = styled.div`
+  border: 3px solid var(--accent-color);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  height: 80%;
+  width: 70%;
+`;
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+  height: 30px;
+  width: 80%;
+`;
+
+const Button = styled.button`
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  /* margin-top: 40px; */
+  padding: 10px 0;
+  width: 70%;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--accent-color);
+    background-color: white;
+    box-shadow: 0px 0px 0px 1px var(--accent-color) inset;
+  }
 `;

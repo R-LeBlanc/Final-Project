@@ -143,7 +143,12 @@ const Title = styled.h2`
 `;
 
 const Delete = styled.button`
+  background-color: var(--secondary-color);
   border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Img = styled.img`
