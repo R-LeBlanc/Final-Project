@@ -128,7 +128,7 @@ const getClass = async (req, res) => {
     console.log(e.message);
   }
 };
-
+// Will return the grades for all students in the class selected
 const getReportByClass = async (req, res) => {
   const classID = req.params.classID;
   try {
@@ -138,6 +138,20 @@ const getReportByClass = async (req, res) => {
     console.log(e.message);
   }
 };
+// Will get a students grade for every class they are in
+const getReportsByStudent = async (req, res) => {
+  const classID = req.params.classID;
+  const studentID = req.params.studentID;
+  // console.log(classID, studentID);
+  try {
+    const report = await eval(classID).where("studentID").equals(studentID);
+    // console.log(report);
+    res.status(200).json({ status: 200, data: report });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
 // Will update the report information for students based on the class
 const updateReportByClass = async (req, res) => {
   const classID = req.params.classID;
@@ -246,6 +260,7 @@ module.exports = {
   getClass,
   getReportComment,
   getReportByClass,
+  getReportsByStudent,
   updateReportByClass,
   getStudents,
 };

@@ -21,84 +21,62 @@ const Dashboard = () => {
   const { userDashboard, setUserDashboard, usersStudents, setUsersStudents } =
     useContext(DashboardContext);
   const [dashboardLoading, setDashboardLoading] = useState(true);
-  // console.log("", userDashboard);
+  const [useSwitch, setUseSwitch] = useState(true);
+
+  // console.log("", selectedReport);
+
   // async fetch functions***************
   // Gets the teacher's dashboard info from the data base
   const dashboardAndStudents = async () => {
     const response = await fetch(`/dashboard/${currentUser.email}`);
     const data = await response.json();
     await setUserDashboard(data.data[0]);
-    setDashboardLoading(false);
-    // const studentArray = [];
-    // await userDashboard.students.map(async (student) => {
-    //   const response = await fetch(`/students/${student}`);
-    //   const data = await response.json();
-    //   studentArray.push(data.data[0]);
-    // });
-    // setUsersStudents(studentArray);
-    // const classesArray = [];
-    // await userDashboard.classes.map(async (c) => {
-    //   const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
-    //   const data = await response.json();
-    //   console.log(data);
-    //   classesArray.push(data.data);
-    // });
-    // setAllClasses(classesArray);
-    // return data.data[0];
   };
 
   const getAllClasses = async () => {
+    setAllClasses([]);
     const classesArray = [];
-    userDashboard.classes.map(async (c) => {
-      const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
-      const data = await response.json();
-      // console.log(data.data);
-      classesArray.push(data.data);
-    });
-    setAllClasses(classesArray);
+    const waitForFetch = async () => {
+      userDashboard.classes.forEach(async (c) => {
+        const response = await fetch(`/classlist/${userDashboard.id}/${c}`);
+        const data = await response.json();
+        classesArray.push(data.data[0]);
+        setAllClasses((prev) => [...prev, data.data[0]]);
+      });
+      return classesArray;
+    };
+    await waitForFetch();
   };
 
   // gets the teacher's students based of the id's retrieved in the teacher dashboard
   const getStudents = async () => {
+    setUsersStudents([]);
     const studentArray = [];
-    userDashboard.students.map(async (student) => {
-      const response = await fetch(`/students/${student}`);
-      const data = await response.json();
-      // console.log(data.data);
-      studentArray.push(data.data[0]);
-    });
-    //   Promise.all(promises).then((data) => {
-    //     console.log(data);
-    //   });
-    // console.log(studentArray);
-    setUsersStudents(studentArray);
-    // console.log(usersStudents);
+    const waitForFetch = async () => {
+      userDashboard.students.map(async (student) => {
+        const response = await fetch(`/students/${student}`);
+        const data = await response.json();
+        setUsersStudents((prev) => [...prev, data.data[0]]);
+      });
+      return studentArray;
+    };
+    await waitForFetch();
   };
   // *************************************
 
-  // useEffect(() => {
-  //   const asyncFunction = async () => {
-  //     let result1 = await dashboardAndStudents();
-  //     getStudents(result1);
-  //     // if (userDashboard) {
-  //     // }
-  //     //   getStudents();
-  //     setDashboardLoading(false);
-  //   };
-  //   // await dashboardAndStudents();
-  //   asyncFunction();
-  // }, []);
-
-  // useEffect(() => {
-  //   dashboardAndStudents();
-  // }, []);
+  useEffect(() => {
+    dashboardAndStudents();
+    setUseSwitch(false);
+  }, []);
 
   useEffect(() => {
-    // if (userDashboard) {
-    getAllClasses();
-    getStudents();
-    setDashboardLoading(false);
-    // }
+    if (!useSwitch) {
+      getAllClasses();
+      getStudents();
+      setDashboardLoading(false);
+      // This switch makes sure that the students are set only once!
+      setUseSwitch(true);
+    }
   }, [userDashboard]);
 
   return (
@@ -109,18 +87,17 @@ const Dashboard = () => {
       ) : (
         <SecondaryWrap>
           {currentUser.displayName ? (
-            <Title>{currentUser.displayName} Dashboard</Title>
+            <Title> Welcome {currentUser.displayName}!</Title>
           ) : (
             <Title>Teachers Dashboard</Title>
           )}
           {!dashboardLoading && (
             // Preview components for dashboard
             <ComponentWrapper>
-              {usersStudents && <StudentPreview />}
-
+              <StudentPreview />
               <LeftSide>
                 <ChartWrap>
-                  <h2>Class Average's</h2>
+                  <h2>Class Averages</h2>
                   <Doughnut
                     data={data}
                     options={{
@@ -147,20 +124,18 @@ const Wrapper = styled.div`
 `;
 
 const SecondaryWrap = styled.div`
-  /* background-color: lightblue; */
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* justify-content: space-between; */
 `;
 
 const Title = styled.div`
   font-size: 2rem;
   font-family: var(--font-header);
+  padding-top: 20px;
 `;
 
 const ComponentWrapper = styled.div`
-  /* background-color: pink; */
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -171,44 +146,43 @@ const LeftSide = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* align-items: center; */
   height: 70%;
 `;
 
 const Container = styled.div``;
 
-const StudentWrap = styled.div`
-  /* background-color: var(--secondary-color); */
-  background-image: linear-gradient(
-    to bottom right,
-    var(--secondary-color),
-    var(--primary-color)
-  );
-  border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  margin: 10px 0;
-`;
+// const StudentWrap = styled.div`
+//   background-color: var(--secondary-color);
+//   /* background-image: linear-gradient(
+//     to bottom right,
+//     var(--secondary-color),
+//     var(--primary-color)
+//   ); */
+//   border-radius: 20px;
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 10px 20px;
+//   margin: 10px 0;
+// `;
 
-const Image = styled.div`
-  background-color: white;
-  border-radius: 100%;
-  color: var(--accent-color);
-  width: 20px;
-  height: 20px;
-  text-align: center;
-`;
+// const Image = styled.div`
+//   background-color: white;
+//   border-radius: 100%;
+//   color: var(--accent-color);
+//   width: 20px;
+//   height: 20px;
+//   text-align: center;
+// `;
 
-const Name = styled.p`
-  /* padding-right: 20px; */
-`;
+// const Name = styled.p`
+//   /* padding-right: 20px; */
+// `;
 
-const StudentId = styled.h3``;
+// const StudentId = styled.h3``;
 
 const ChartWrap = styled.div`
   /* background-color: lightblue; */
   max-width: 300px;
 `;
 
-const ClassList = styled.div``;
+// const ClassList = styled.div``;

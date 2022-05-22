@@ -6,7 +6,7 @@ const Homepage = () => {
     <>
       <Body>
         <Description>
-          <h2>Lorem Dolor Sed</h2>
+          <Welcome>Welcome To Atlas</Welcome>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -22,19 +22,31 @@ const Homepage = () => {
 export default Homepage;
 
 const Body = styled.div`
-  background-image: url("/images/love_to_learn.jpg");
+  background-image: url("/images/library.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  height: 90vh;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  /* transform: rotate(90deg); */
 `;
 
 const Description = styled.div`
-  background-color: rgba(0, 173, 181, 0.7);
-  border-radius: 20px;
+  border: 2px solid var(--accent-color);
+  border-radius: 15px;
   color: white;
-  max-width: 500px;
   padding: 20px;
-  position: absolute;
-  bottom: 5%;
-  left: 2.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  width: 50%;
+  height: 20%;
+`;
+
+const Welcome = styled.h1`
+  font-size: 2.5rem;
 `;

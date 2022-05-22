@@ -21,7 +21,6 @@ const Post = () => {
   // space(new lines, spaces, tabs) ex. /\s/g
   const characterCounter = (event) => {
     let textArray = event.target.value.replace(/\s/g, "").length;
-    // console.log(textArray);
     setCounter(seed - textArray);
     return counter;
   };
@@ -51,9 +50,8 @@ const Post = () => {
         },
         body: JSON.stringify(post),
       };
-      fetch("/announcements", request)
-        .then((res) => res.json())
-        .then((data) => console.log(data));
+      fetch("/announcements", request).then((res) => res.json());
+      // .then((data) => console.log(data));
     }
     navigate("/announcements");
   };

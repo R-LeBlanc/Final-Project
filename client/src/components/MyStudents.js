@@ -1,66 +1,94 @@
 import styled from "styled-components";
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { DashboardContext } from "./DashbordComponents/DashboardContext";
+import { ReportContext } from "./ReportCardComponents/ReportContext";
 import SideMenu from "./DashbordComponents/SideMenu";
+import Modal from "./DashbordComponents/Modal";
 
 const MyStudents = () => {
+  const navigate = useNavigate();
+  const { allClasses, selectedReport, setSelectedReport, grades } =
+    useContext(ReportContext);
   const { userDashboard, usersStudents } = useContext(DashboardContext);
-  //   const [classes, setClasses] = useState();
-  //   console.log(usersStudents);
+  // const [selectedReport, setSelectedReport] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  // console.log({ allClasses });
 
-  //   const getClasses = async () => {
-  //     const response = await fetch(`/classlist/${userDashboard.id}`);
-  //     const data = await response.json();
-  //     console.log(data.data);
-  //     setClasses(data.data);
-  //   };
+  const getStudentGradesOnClick = async (e) => {
+    const test = async () => {
+      const gradesArr = [];
+      allClasses.forEach(async (c) => {
+        const response = await fetch(`/report/${c.classID}/${e.target.id}`);
+        const data = await response.json();
+        setSelectedReport((prev) => [...prev, data.data[0]]);
+      });
+      return gradesArr;
+    };
 
-  //   useEffect(() => {
-  //     getClasses();
-  //   }, []);
+    const testRes = await test();
+
+    setIsOpen(true);
+  };
+
+  // console.log(selectedReport);
 
   return (
-    <Wrapper>
-      <SideMenu />
-      <SecondaryWrap>
-        <Title>My Students</Title>
-        <ClassesWrap>
-          <ClassesWrap2>
-            {/* <Buttons>
+    <>
+      {isOpen && <Modal setIsOpen={setIsOpen} />}
+      <Wrapper>
+        <SideMenu />
+        <SecondaryWrap>
+          <Title>My Students</Title>
+          <ClassesWrap>
+            <ClassesWrap2>
+              {/* <Buttons>
               <View>Class View</View>
               <View>Student View</View>
             </Buttons> */}
-            <Table>
-              <Row>
-                <TableTitles>Sheet Name</TableTitles>
-
-                <TableTitles>Grade</TableTitles>
-                <TableTitles>Teacher(s)</TableTitles>
-                <TableTitles>Average</TableTitles>
-                <TableTitles>Median</TableTitles>
-              </Row>
-              {!usersStudents ? (
-                <h1>Loading</h1>
-              ) : (
-                usersStudents.map((student) => {
-                  return (
-                    <Row key={student.id}>
-                      <Classes>{student.name}</Classes>
-                      <Classes>5</Classes>
-                      <Classes>{userDashboard.name}</Classes>
-                      {/* TEMP DATA */}
-                      <Classes>78</Classes>
-                      <Classes>70</Classes>
-                    </Row>
-                  );
-                })
-              )}
-            </Table>
-          </ClassesWrap2>
-        </ClassesWrap>
-      </SecondaryWrap>
-    </Wrapper>
+              <Table>
+                <thead>
+                  <Row>
+                    <TableTitles>Sheet Name</TableTitles>
+                    <TableTitles>Student ID</TableTitles>
+                    <TableTitles>Grade</TableTitles>
+                    <TableTitles>Teacher(s)</TableTitles>
+                    <TableTitles>Report</TableTitles>
+                  </Row>
+                </thead>
+                <tbody>
+                  {!usersStudents ? (
+                    <h1>Loading</h1>
+                  ) : (
+                    usersStudents.map((student) => {
+                      return (
+                        <Row key={student.id}>
+                          <Classes>{student.name}</Classes>
+                          <Classes>{student.id}</Classes>
+                          <Classes>5</Classes>
+                          <Classes>{userDashboard.name}</Classes>
+                          <Classes>
+                            {/* Report Icon */}
+                            <Img
+                              src="/images/exam.png"
+                              id={student.id}
+                              onClick={(e) => {
+                                getStudentGradesOnClick(e);
+                              }}
+                            />
+                          </Classes>
+                        </Row>
+                      );
+                    })
+                  )}
+                </tbody>
+              </Table>
+            </ClassesWrap2>
+          </ClassesWrap>
+        </SecondaryWrap>
+      </Wrapper>
+    </>
   );
 };
 
@@ -107,25 +135,25 @@ const ClassesWrap2 = styled.div`
   width: 80%;
 `;
 
-const Buttons = styled.div`
-  /* background-color: pink; */
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 0 30px;
-  width: 90%;
-`;
+// const Buttons = styled.div`
+//   /* background-color: pink; */
+//   display: flex;
+//   justify-content: flex-end;
+//   padding: 10px 0 30px;
+//   width: 90%;
+// `;
 
-const View = styled.button`
-  border: none;
-  padding: 5px 10px;
-  margin-left: 7px;
+// const View = styled.button`
+//   border: none;
+//   padding: 5px 10px;
+//   margin-left: 7px;
 
-  &:hover {
-    color: white;
-    background-color: var(--accent-color);
-    cursor: pointer;
-  }
-`;
+//   &:hover {
+//     color: white;
+//     background-color: var(--accent-color);
+//     cursor: pointer;
+//   }
+// `;
 
 const Table = styled.table`
   /* background-color: pink; */
@@ -152,8 +180,17 @@ const TableTitles = styled.th`
 `;
 
 const Classes = styled.td`
+  vertical-align: middle;
   /* background-color: pink; */
   /* display: flex;
   justify-content: space-evenly;
   width: 100%; */
+`;
+
+const Img = styled.img`
+  height: 50px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

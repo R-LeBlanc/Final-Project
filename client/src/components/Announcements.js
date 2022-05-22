@@ -13,10 +13,9 @@ const Announcements = () => {
   const [announcements, setAnnouncements] = useState();
   const [loading, setLoading] = useState(true);
   const [classList, setClassList] = useState();
-  // console.log(announcements);
+
   // Pulls a list of class names and the main school announcements from the
   // database
-  // console.log(announcements);
   useEffect(() => {
     fetch("/announcements")
       .then((res) => res.json())
@@ -45,7 +44,7 @@ const Announcements = () => {
   const deleteAnnouncement = async (id) => {
     const response = await fetch(`/announcements/${id}`, { method: "DELETE" });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     // Filter through the announcement array and returns the objects that
     // do not match the id of the selected item
     setAnnouncements((announcements) =>
@@ -57,31 +56,29 @@ const Announcements = () => {
     return announcements.map((announcement) => {
       return (
         <Wrapper key={announcement.title}>
-          {currentUser && userDashboard.className === announcements[0].class ? (
-            <>
-              <Delete
-                onClick={() => {
-                  deleteAnnouncement(announcement._id);
-                }}
-              >
-                Delete
-              </Delete>
-            </>
-          ) : (
-            ""
-          )}
-          <Title>{announcement.title}</Title>
+          <TitleWrap>
+            <Title>{announcement.title}</Title>
+            {currentUser &&
+            userDashboard.className === announcements[0].class ? (
+              <>
+                <Delete
+                  onClick={() => {
+                    deleteAnnouncement(announcement._id);
+                  }}
+                >
+                  <Img src="/images/close.png" />
+                </Delete>
+              </>
+            ) : (
+              ""
+            )}
+          </TitleWrap>
           <Message>{announcement.message}</Message>
         </Wrapper>
       );
     });
   };
 
-  // if (!loading) {
-  //   console.log(announceArray());
-  //   console.log(announcements);
-  //   console.log(classList);
-  // }
   return (
     <>
       {!loading ? (
@@ -107,7 +104,7 @@ const Announcements = () => {
             {currentUser &&
             userDashboard.className === announcements[0].class ? (
               <>
-                <h1>{currentUser.displayName}</h1>
+                <UserName>{currentUser.displayName}</UserName>
                 {/* <Post /> */}
               </>
             ) : (
@@ -125,18 +122,45 @@ const Announcements = () => {
 
 export default Announcements;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  background-color: var(--secondary-color);
+  /* border: 2px solid var(--accent-color); */
+  border-radius: 15px;
+  box-shadow: -1px 1px 5px 3px rgba(0, 0, 0, 0.3);
+  /* backdrop-filter: blur(10px); */
+  color: white;
+  padding: 20px;
+  margin: 20px;
+`;
 
-const Title = styled.h2``;
+const TitleWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-const Delete = styled.button``;
+const Title = styled.h2`
+  border-bottom: 2px solid var(--accent-color);
+`;
+
+const Delete = styled.button`
+  border: none;
+`;
+
+const Img = styled.img`
+  height: 20px;
+`;
 
 const Message = styled.div`
   font-family: var(--font-body);
+  padding-top: 20px;
 `;
 
 const MainWrapper = styled.div`
+  /* background-color: var(--primary-color); */
   display: flex;
+  /* background-image: url("/images/erik-skof-2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; */
 `;
 
 const SideBar = styled.div`
@@ -166,4 +190,8 @@ const ClassName = styled.button`
 
 const AnnounceWrapper = styled.div`
   height: 90vh;
+`;
+
+const UserName = styled.h1`
+  padding: 20px 0 0 20px;
 `;

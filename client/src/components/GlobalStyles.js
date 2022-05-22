@@ -9,7 +9,7 @@ export default createGlobalStyle`
 :root {
     --primary-color: #303841;
     --secondary-color: #00ADB5;
-    --accent-color: #FF5722;
+    --accent-color: rgb(255, 164, 84);
 	--font-header: 'Bebas Neue', sans-serif;
 	--font-body: 'Montserrat', sans-serif;
 }
