@@ -23,6 +23,7 @@ A report card writing app that will enhance educator’s ability to communicate 
 
 
 - Educators will be able to auto populate report card comments based on the students’ pronouns, grades, and course. Educators will then be able to edit each comment if they wish.
+- The comment bacnk only has english class comments at the moment, will be updated to include other class comments in the future
 
 ![image](https://user-images.githubusercontent.com/69764797/169677617-0be52396-ad2f-4b7e-bd8f-9912aeb1c9e5.png)
 
@@ -34,3 +35,5 @@ A report card writing app that will enhance educator’s ability to communicate 
 - Educators can post announcements to the classes announcement page
 
 ![image](https://user-images.githubusercontent.com/69764797/169677695-8d395d6b-d8e8-4cdc-b663-bbe2ca34fb54.png)
+
+
